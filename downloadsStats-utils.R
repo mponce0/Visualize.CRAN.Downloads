@@ -1,24 +1,49 @@
+# downloadsStats-utils.R
+#  -- M.Ponce
+
+
+#################################################################################################
+##	Utilities file for the downloadsStats package
+#
+#################################################################################################
+
 
 ### date aux fns
-today <- function() { return(Sys.Date()) }
+today <- function() {
+#' function that returns the current date 
+#' @keywords internal
+	return(Sys.Date())
+}
 
 lastyear.date <- function() {
+#' function that returns the date from one year ago
+#' @keywords internal
 	cur.date <- Sys.Date()
 	cur.year <- substr(cur.date,1,4)
 	lst.year <- as.integer(cur.year) - 1
 	t0 <- paste(lst.year,substr(cur.date,5,10),sep="")
 
-	message("No starting date was specified, will assume a year from now: ",t0)
+	message("Starting date was not specified, will assume a year from now: ",t0)
 	return(t0)
 }
 
+# load and check needed packages/libraries...
 loadLibrary <- function(lib) {
+#' function to check and load an specific set of libraries
+#' @param  lib  is a list of packages to be loaded
+#' @keyword internal
 	if (require(lib,character.only = TRUE) == FALSE) stop(lib, " is needed for this package to work but is not installed in your system!")
 }
 
+
+
 ### retrieve package data
 retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
-
+#' function to download the data from the CRAN logs for an specific package
+#' @param  pckg  is the name of the package to look for the downloads data
+#' @param  t0  is the intiial date
+#' @param  t1  is the final date
+#' @return a list compose of the stats from the original time frame and the last month
 	# to access the logs from CRAN
 	loadLibrary("cranlogs")
 
@@ -44,9 +69,30 @@ retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 
 ### main wrapper fn
 processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
+#' main function to analyze a list of packages in a given time frame
+#' @param  pckg.lst  list of packages to process
+#' @param  t0  initial date, begining of the time period
+#' @param  t1  final date, ending of the time period
+#' @param  opts  a list of different options available for customizing the output 
+	# verify options...
+	checkOpts <- function(opts,validOpts){
+
+		for (opt in tolower(opts)) {
+			if (!(opt %in% validOpts)) {
+				message('"',opt,'"', " not recognized among valid options for the function, it will be ignored")
+				invalid <- TRUE
+			}
+		}
+		if (invalid) message("Valid options are: ", '"',paste(validOpts,collapse='" "'),'"')
+	}
+
 
 	# check dates...
 	
+
+	# check options...
+	validOpts <- c("nostatic","nointeractive", "nocombined", "compare")
+	checkOpts(opts,validOpts)
 
 	# initialize lists for storaging info
 	pckgDwnlds <- list()

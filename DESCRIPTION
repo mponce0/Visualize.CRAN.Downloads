@@ -1,0 +1,24 @@
+Package: Visualize.CRAN.Downloads
+Type: Package
+Title: Visualize downloads from CRAN Packages
+Version: 1.0
+Date: 2019-12-30
+Author: Marcelo Ponce [aut, cre]
+Maintainer: Marcelo Ponce <mponce@scinet.utoronto.ca>
+Description: This package allows you to visualize the trends and historical downloads from packages in the CRAN repository.
+Imports:
+    graphics,
+    stats,
+    utils,
+    cranlogs,
+    plotly,
+    htmlwidgets
+Suggests:
+    knitr,
+    devtools,
+    roxygen2,
+    testthat
+License: GPL (>=2)
+URL: https://github.com/mponce0/downloadsStats
+BugReports: https://github.com/mponce0/downloadsStats/issues
+RoxygenNote: 6.1.99.9001

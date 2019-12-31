@@ -3,7 +3,7 @@
 
 
 #################################################################################################
-##	Utilities file for the downloadsStats package
+##	Utilities file for the Visualize.CRAN.Downloads package
 #
 #################################################################################################
 
@@ -31,7 +31,7 @@ lastyear.date <- function() {
 loadLibrary <- function(lib) {
 #' function to check and load an specific set of libraries
 #' @param  lib  is a list of packages to be loaded
-#' @keyword internal
+#' @keywords internal
 	if (require(lib,character.only = TRUE) == FALSE) stop(lib, " is needed for this package to work but is not installed in your system!")
 }
 
@@ -41,9 +41,17 @@ loadLibrary <- function(lib) {
 retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 #' function to download the data from the CRAN logs for an specific package
 #' @param  pckg  is the name of the package to look for the downloads data
-#' @param  t0  is the intiial date
+#' @param  t0  is the initial date
 #' @param  t1  is the final date
 #' @return a list compose of the stats from the original time frame and the last month
+#'
+#' @importFrom cranlogs  cran_downloads
+#' @export
+#'
+#' @examples
+#' retrievePckgData("ggplot")
+#' retrievePckgData("ggplot","2018-01-01","2019-01-01")
+
 	# to access the logs from CRAN
 	loadLibrary("cranlogs")
 
@@ -74,15 +82,35 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 #' @param  t0  initial date, begining of the time period
 #' @param  t1  final date, ending of the time period
 #' @param  opts  a list of different options available for customizing the output 
+#'
+#' @export
+#'
+#' @examples
+#' processPckg("ehelp")
+#' processPckg(c("ehelp","plotly","ggplot"), "2001-01-01")
+#' processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts="nostatic")
+#' processPckg(c("ehelp","plotly","ggplot"), "2001-01-01",
+#'		opts=c("nostatic","nocombined","nointeractive"))
+
 	# verify options...
 	checkOpts <- function(opts,validOpts){
+	# function to check arguments
+	# @param  opts  list of options
+	# @param  validOpts  list of valid options
+	#
+	# @keywords internal
+		# flag to identify invalid arguments...
+		invalid <- FALSE
 
+		# check every argument
 		for (opt in tolower(opts)) {
 			if (!(opt %in% validOpts)) {
 				message('"',opt,'"', " not recognized among valid options for the function, it will be ignored")
 				invalid <- TRUE
 			}
 		}
+
+		# check whether is necessary to remind the user about the possible options for the arguments
 		if (invalid) message("Valid options are: ", '"',paste(validOpts,collapse='" "'),'"')
 	}
 
@@ -145,6 +173,25 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 ### static plots
 staticPlots <- function(pckg.stats.total,pckg.stats.lstmnt,
 			fileName=paste0("DWNLDS_",pckg.stats.total$package[1],".pdf"), combinePlts=FALSE){
+#' function that generates visual trends of the package downloads logs from CRAN, it will generate 4 plots: two histograms, a pulse plot and the main plot is a plot of the downloads as a function of time
+#' @param  pckg.stats.total  total downloads from the package
+#' @param  pckg.stats.lstmnt  last month downloads
+#' @param  fileName  an optional string argument specifying the name of the file where to save the plots
+#' @param  combinePlts a boolean indicating whether the plots generated will be combined into one single figure or not
+#'
+#' @importFrom grDevices  dev.off pdf
+#' @importFrom graphics  abline axis axis.Date hist
+#'                       lines par plot points text
+#' @importFrom stats  sd
+#'
+#' @export
+#'
+#' @examples
+#' packageData <- retrievePckgData("ggplot")
+#' totalDownloads <- packageData[[1]]
+#' lastmonthDownloads <- packageData[[2]]
+#' staticPlots(totalDownloads,lastmonthDownloads)
+#' staticPlots(totalDownloads,lastmonthDownloads,combinePlts=TRUE)
 
 	# define some useful quantities
 	max.downloads <- max(pckg.stats.total$count)
@@ -274,7 +321,21 @@ staticPlots <- function(pckg.stats.total,pckg.stats.lstmnt,
 interactivePlots <- function(downloads.data, mytitle=paste(downloads.data$package[1],"Package downloads counts"),
 				nbrPlts = 2, month.ln=31,
 				HTMLfile=paste0("Interactive_DWNLDS_",downloads.data$package[1],"stats.html") ) {
-        
+#' function that generates interactive plots of the package downloads logs from CRAN
+#' @param  downloads.data  total downloads from the package
+#' @param  mytitle  optional char argument specifying the title to be displayed
+#' @param  nbrPlts  optional numeric argument specifying number of plots to generate
+#' @param  month.ln optional numeric argument specifying the lenght of the month in days
+#' @param  HTMLfile  an optional string argument specifying the name of the file where to save the plots
+#'
+#' @importFrom  plotly  %>% add_annotations add_trace as_widget plot_ly subplot layout
+#' @importFrom  htmlwidgets  saveWidget
+#' @export
+#'
+#' @examples
+#' packageXdownloads <- retrievePckgData("ggplot")[[1]]
+#' interactivePlots(packageXdownloads)
+       
         loadLibrary("plotly")
 
 	tot.days <- length(downloads.data[,1])
@@ -341,6 +402,17 @@ interactivePlots <- function(downloads.data, mytitle=paste(downloads.data$packag
 
 # summaries
 summaries <- function(data1,data2) {
+#' function to display the summary of the data
+#' @param  data1  first dataset, eg. total data
+#' @param  data2  second dataset, eg. last month data
+#'
+#' @export
+#'
+#' @examples
+#' packageXdownloads <- retrievePckgData("ehelp")[[1]]
+#' packageXlastmonth <- retrievePckgData("ehelp")[[2]]
+#' summaries(packageXdownloads,packageXlastmonth)
+
 	hdr <- paste(paste(rep("#",70),collapse=''), '\n')
 	hdr2 <- paste(paste(rep("-",35),collapse=''), '\n')
 	hdr3 <-  paste(paste(rep("~",60),collapse=''), '\n')

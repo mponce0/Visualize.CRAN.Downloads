@@ -9,13 +9,6 @@ The user can specify different ways to display the information: in a classic
 (static) plot, an interactive representation, and/or a combined figure
 comparing multiple packages.
 
-### Usage
-It is possible then to specify several packages at the same time, and indicate
-the type of outcome to be produced.
-By default the package will generate the static and interactive representations,
-this can be turned off by indicating the "nostatic" and/or "nointeractive" as
-options in the arguments of the main function.
-
 
 ## Features
 ### Automatic date specification and selection
@@ -36,6 +29,13 @@ It utilizes the `cranlogs` package for accessing the data of the downloads and
 the `plotly` package for generating interactive visualizations.
 The basic (static) plots are generated employing R basic capabilities.
 
+
+## Usage
+It is possible then to specify several packages at the same time, and indicate
+the type of outcome to be produced.
+By default the package will generate the static and interactive representations,
+this can be turned off by indicating the `"nostatic"` and/or `"nointeractive"` as
+options in the arguments of the main function.
 
 
 ## Examples

@@ -8,15 +8,17 @@ package in the CRAN repository.
 
 
 ## Features
-### Automatic date specification
+### Automatic date specification and selection
 The user can specify the range of dates to be processed, however the main
-function of the package will run a couple of chekcs on these:
+function of the package will run a couple of checks and adjustments on these:
 
 1) if no dates are specified it will assume the current date as the end of the
-period and a year before as the starting date
+period and a year before as the starting date, ie. a period of a year since today;
 
-2) will reset the range to the first download within the speicied dates, so
-that dates previous to any reported download from the CRAN logs are not shown 
+2) given a range of dates, it will reset the range to the first reported download
+within the specified dates, so that dates previous to any reported download from
+the CRAN logs are not shown, in this way the package can generate a cleaner and
+more meaningful visualization 
 
 
 ### Implementation

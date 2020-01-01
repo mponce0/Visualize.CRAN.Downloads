@@ -43,6 +43,16 @@ a histogram of number of downloads, a pulse plot and a download vs time plot.
 The default style is to generate these 4 plots in the same figure, but it can be switch
 to generate one plot per figure by utilizing the `"nocombined"` option.
 
+### Summary of options
+
+option         | action
+------         | -----------
+nostatic       | disable static plots
+nointeractive  | disable interactive plots
+nocombined     | disable combination of static plots, ie. each plot will be a separated figure
+comparison     | generates a plot comparing the downloads of multiple packages
+---------------------------
+
 
 ## Examples
 ```

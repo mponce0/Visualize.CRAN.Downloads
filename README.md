@@ -31,11 +31,17 @@ The basic (static) plots are generated employing R basic capabilities.
 
 
 ## Usage
-It is possible then to specify several packages at the same time, and indicate
+It is possible to specify several packages at the same time, and indicate
 the type of outcome to be produced.
 By default the package will generate the static and interactive representations,
 this can be turned off by indicating the `"nostatic"` and/or `"nointeractive"` as
 options in the arguments of the main function.
+A comparison plot between multiple package should be explicityr equested using
+the `"comparison"` option in the list of arguments.
+The static plot includes actually 4 different plots: a histogram of downloads vs time,
+a histogram of number of downloads, a pulse plot and a download vs time plot.
+The default style is to generate these 4 plots in the same figure, but it can be switch
+to generate one plot per figure by utilizing the `"nocombined"` option.
 
 
 ## Examples

@@ -45,12 +45,12 @@ to generate one plot per figure by utilizing the `"nocombined"` option.
 
 ### Summary of options
 
-option         | action
-------         | -----------
-nostatic       | disable static plots
-nointeractive  | disable interactive plots
-nocombined     | disable combination of static plots, ie. each plot will be a separated figure
-comparison     | generates a plot comparing the downloads of multiple packages
+option             | action
+------             | -----------
+`"nostatic"`       | disable static plots
+`"nointeractive"`  | disable interactive plots
+`"nocombined"`     | disable combination of static plots, ie. each plot will be a separated figure
+`"comparison"`     | generates a plot comparing the downloads of multiple packages
 ---------------------------
 
 

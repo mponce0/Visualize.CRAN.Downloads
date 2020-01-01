@@ -8,11 +8,13 @@
 #################################################################################################
 
 
-### date aux fns
+### date's aux fns
 today <- function() {
 #' function that returns the current date 
 #' @keywords internal
-	return(Sys.Date())
+	t1 <- Sys.Date()
+	message("Ending date was not specifed, will assume today: ",t1)
+	return(t1)
 }
 
 lastyear.date <- function() {
@@ -26,6 +28,27 @@ lastyear.date <- function() {
 	message("Starting date was not specified, will assume a year from now: ",t0)
 	return(t0)
 }
+
+checkDates <- function(t0,t1) {
+#' function to check dates, ie that t0<t1 and t0!=t1
+#' @param  t0  initial date
+#' @param  t1  final date
+#' @return a list with t0 being [[1]] and t1 being [[2]]
+#'
+#' @keywords internal
+	# check whether t0 is greater than t1
+        if (as.Date(t0) > as.Date(t1)) {
+                # flip dates, t0 will be set to the older date
+                ttemp <- t0
+                t0 <- t1
+                t1 <- ttemp
+        } else if (as.Date(t0) == as.Date(t1)) {
+		# dates should be different
+                stop(t0," and ", t1," should be different!")       
+        }
+	return(list(t0,t1))
+}
+
 
 # load and check needed packages/libraries...
 loadLibrary <- function(lib) {
@@ -55,8 +78,13 @@ retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 	# to access the logs from CRAN
 	loadLibrary("cranlogs")
 
+	# check package name
 	if (is.null(pckg)) stop("Need a valid package name to process!")
 
+	# check dates
+	dates <- checkDates(t0,t1)
+	t0 <- dates[[1]]
+	t1 <- dates[[2]]
 
 	# retrieve data
 	# TOTAL
@@ -115,16 +143,20 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 	}
 
 
-	# check dates...
-	
+        # check dates
+        dates <- checkDates(t0,t1)
+        t0 <- dates[[1]]
+        t1 <- dates[[2]]
 
 	# check options...
 	validOpts <- c("nostatic","nointeractive", "nocombined", "compare")
 	checkOpts(opts,validOpts)
 
+
 	# initialize lists for storaging info
 	pckgDwnlds <- list()
 	pckg.stats.lstmnt <- list()
+
 
 	for (pckg in pckg.lst) {
 		# retrieve data
@@ -171,7 +203,7 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 
 
 ### static plots
-staticPlots <- function(pckg.stats.total,pckg.stats.lstmnt,
+staticPlots <- function(pckg.stats.total, pckg.stats.lstmnt,
 			fileName=paste0("DWNLDS_",pckg.stats.total$package[1],".pdf"), combinePlts=FALSE){
 #' function that generates visual trends of the package downloads logs from CRAN, it will generate 4 plots: two histograms, a pulse plot and the main plot is a plot of the downloads as a function of time
 #' @param  pckg.stats.total  total downloads from the package
@@ -193,6 +225,7 @@ staticPlots <- function(pckg.stats.total,pckg.stats.lstmnt,
 #' staticPlots(totalDownloads,lastmonthDownloads)
 #' staticPlots(totalDownloads,lastmonthDownloads,combinePlts=TRUE)
 
+
 	# define some useful quantities
 	max.downloads <- max(pckg.stats.total$count)
 	max.dwlds.date <- pckg.stats.total$date[pckg.stats.total$count == max.downloads]
@@ -201,6 +234,12 @@ staticPlots <- function(pckg.stats.total,pckg.stats.lstmnt,
 	mnt.days <- length(pckg.stats.lstmnt$date)
 	lst.date <- pckg.stats.total$date[tot.days]
 	pckgName <- pckg.stats.total$package[1]
+
+	# define a time unit vector, for  days/month/trimester/semester/year
+	time.units <- c(1,30,90,180,365)
+	# identify time intervales in range of dates
+	period.units <- tot.days/time.units
+	periods    <- period.units > 1
 
 	# reporting package name...
 	message("Processing package ",pckgName)
@@ -222,7 +261,7 @@ staticPlots <- function(pckg.stats.total,pckg.stats.lstmnt,
 	# bins in units of months
 	bins.mnt <- as.integer(tot.days/30)
 	# bins in units of trimesters
-	bins.3mnts <- as.integer(tot.days/120)
+	bins.3mnts <- as.integer(tot.days/90)
 	# bins in units of semesters
 	bins.6mnts <- as.integer(tot.days/180)
 
@@ -417,6 +456,12 @@ summaries <- function(data1,data2) {
 	hdr2 <- paste(paste(rep("-",35),collapse=''), '\n')
 	hdr3 <-  paste(paste(rep("~",60),collapse=''), '\n')
 
+
+	cat(hdr)
+	line1 <- paste("Processing Package",data1$package[1])
+	len.line1 <- nchar(line1)
+	p.line1 <- paste(paste(rep("#",(70-len.line1-2)/2),collapse=''))
+	cat(p.line1,line1,p.line1,'\n')
 	cat(hdr)
 	cat(paste("period: ",data1$date[1],' - ',data1$date[length(data1$date)]),'\n')
 	cat(hdr2)

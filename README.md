@@ -22,12 +22,13 @@ that dates previous to any reported download from the CRAN logs are not shown
 ### Implementation
 It utilizes the `cranlogs` package for accessing the data of the downloads and
 the `plotly` package for generating interactive visualizations.
+The basic (static) plots are generated employing R basic capabilities.
 
 The user can specify different ways to display the information: in a classic
 (static) plot, an interactive representation, and/or a combined figure
 comparing different packages.
 It is possible to specify several packages at the same time, and select the
-type of out come to be produced.
+type of outcome to be produced.
 
 
 ## Examples

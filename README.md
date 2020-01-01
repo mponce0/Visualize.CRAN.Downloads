@@ -1,4 +1,4 @@
-# cran-downloadsStats
+# Visualize.CRAN.Downloads
 
 
 ## Introduction

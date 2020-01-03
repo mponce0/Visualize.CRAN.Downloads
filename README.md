@@ -54,6 +54,34 @@ option             | action
 ---------------------------
 
 
+## Installation
+
+For using the "Visualize.CRAN.Downloads" package, first you will need to
+install it.
+"Visualize.CRAN.Downloads" requires the `cranlogs` and `plotly` packages,
+check to have these already installed before installing `Visualize.CRAN.Downloads`.
+
+The stable version can be downloaded from the CRAN repository:
+
+```
+install.packages("Visualize.CRAN.Downloads")
+```
+
+To obtain the development version you can get it from the github repository, i.e.
+
+```
+# need devtools for installing from the github repo
+install.packages("devtools")
+
+# install eHelp
+devtools::install_github("mponce0/Visualize.CRAN.Downloads")
+
+# load eHelp
+library(eHelp)
+```
+
+
+
 ## Examples
 ```
 processPckg("ehelp")

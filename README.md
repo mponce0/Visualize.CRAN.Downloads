@@ -36,7 +36,7 @@ the type of outcome to be produced.
 By default the package will generate the static and interactive representations,
 this can be turned off by indicating the `"nostatic"` and/or `"nointeractive"` as
 options in the arguments of the main function.
-A comparison plot between multiple package should be explicityr equested using
+A comparison plot between multiple package should be explicity requested using
 the `"comparison"` option in the list of arguments.
 The static plot includes actually 4 different plots: a histogram of downloads vs time,
 a histogram of number of downloads, a pulse plot and a download vs time plot.
@@ -47,9 +47,11 @@ to generate one plot per figure by utilizing the `"nocombined"` option.
 
 option             | action
 ------             | -----------
-`"nostatic"`       | disable static plots
-`"nointeractive"`  | disable interactive plots
-`"nocombined"`     | disable combination of static plots, ie. each plot will be a separated figure
+`"nostatic"`       | disables static plots
+`"nointeractive"`  | disables interactive plots
+`"nocombined"`     | disables combination of static plots, ie. each plot will be a separated figure
+`"noConfBands"`    | disables the shading of "confidence bands (regions)"
+`"noMovingAvgs"`   | disables the display of "moving" estimators
 `"comparison"`     | generates a plot comparing the downloads of multiple packages
 ---------------------------
 

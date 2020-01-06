@@ -113,5 +113,5 @@ processPckg(c("ehelp","plotly","ggplot"), "2001-01-01")
 
 processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts="nostatic")
 
-processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts=c("nostatic","nocombined","nointeractive"))
+processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts=c("nointeractive","combined"))
 ```

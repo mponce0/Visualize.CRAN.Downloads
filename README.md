@@ -21,13 +21,22 @@ period and a year before as the starting date, ie. a period of a year since toda
 2) given a range of dates, it will reset the range to the first reported download
 within the specified dates, so that dates previous to any reported download from
 the CRAN logs are not shown, in this way the package can generate a cleaner and
-more meaningful visualization 
+more meaningful visualization.
 
+### Displaying "moving" statistical estimators
+In other to show a closer trend to the time series data of downloads, the package will also displaying moving averages and moving intervals of confidence. The confidence interval is also shaded in the main plot.
+Both features can be turned off, using the corresponding flags in the optios: `"noMovingAvgs"` and `"noConfBands"`.
 
 ### Implementation
 It utilizes the `cranlogs` package for accessing the data of the downloads and
 the `plotly` package for generating interactive visualizations.
 The basic (static) plots are generated employing R basic capabilities.
+The basic plots are saved in the current directory in a PDF file named
+*"DWNLDS_packageName.pdf"*, where *'packageName'* is the actual name of the
+package analyzed.
+The interactive plots are saved in the current directory in an HTML file named
+*"Interactive_DWNLDS_packageName.html"*, where *'packageName'* is the actual name of the
+package analyzed.
 
 
 ## Usage

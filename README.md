@@ -27,9 +27,10 @@ more meaningful visualization.
 In other to show a closer trend to the time series data of downloads, the package will also displaying moving averages and moving intervals of confidence. The confidence interval is also shaded in the main plot.
 Both features can be turned off, using the corresponding flags in the optios: `"noMovingAvgs"` and `"noConfBands"`.
 
-### Implementation
-It utilizes the `cranlogs` package for accessing the data of the downloads and
-the `plotly` package for generating interactive visualizations.
+
+## Implementation
+Visualize.CRAN.Downloads utilizes the `cranlogs` package for accessing the data of
+the downloads and the `plotly` package for generating interactive visualizations.
 The basic (static) plots are generated employing R basic capabilities.
 The basic plots are saved in the current directory in a PDF file named
 *"DWNLDS_packageName.pdf"*, where *'packageName'* is the actual name of the
@@ -47,10 +48,21 @@ this can be turned off by indicating the `"nostatic"` and/or `"nointeractive"` a
 options in the arguments of the main function.
 A comparison plot between multiple package should be explicity requested using
 the `"comparison"` option in the list of arguments.
-The static plot includes actually 4 different plots: a histogram of downloads vs time,
+The static plot actually includes 4 different plots: a histogram of downloads vs time,
 a histogram of number of downloads, a pulse plot and a download vs time plot.
 The default style is to generate these 4 plots in the same figure, but it can be switch
 to generate one plot per figure by utilizing the `"nocombined"` option.
+In each of the plot a dahsed line is added representing the total average over time.
+In the "pulse" plot (third subplot), we added also a shaded region defined by the
+total average plus/minus the total standard deviation.
+Additionally moving averages and and moving standard deviations computations are
+displayed in dotted and dhased-dotted lines.
+The main plot also displays the total average and the shaded region corresponds to
+the confidence interval defined by the moving average plus/minus the moving standard
+deviation computed using a window of 1/10 the length of the period of time.
+The display of the moving estimators can be turned off, including the `"noMovingAvgs"` flag;
+and the shaded regions can be avoided using the `"noConfBands"` flag.
+
 
 ### Summary of options
 

@@ -67,7 +67,7 @@ The display of the moving estimators can be turned off, including the `"noMoving
 and the shaded regions can be avoided using the `"noConfBands"` flag.
 
 
-![Example of the static plot generated for the *ehelp* package](man/figures/DWNLDS_ehelp.pdf)
+![Example of the static plot generated for the *ehelp* package](man/figures/DWNLDS_ehelp.png)
 
 ### Summary of options
 

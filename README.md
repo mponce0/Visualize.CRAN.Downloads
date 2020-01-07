@@ -66,8 +66,13 @@ deviation computed using a window of 1/10 the length of the period of time.
 The display of the moving estimators can be turned off, including the `"noMovingAvgs"` flag;
 and the shaded regions can be avoided using the `"noConfBands"` flag.
 
+Two more "fixed" averages are presented in the main plot, indicating the average
+number of downloads for the package in the last two "units" of time, eg last month
+and last week, or last six-months and last month, etc.
+
 
 ![Example of the static plot generated for the *ehelp* package](man/figures/DWNLDS_ehelp.png)
+
 
 ### Summary of options
 

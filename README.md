@@ -59,7 +59,7 @@ In each of the plot a dahsed line is added representing the total average over t
 In the "pulse" plot (third subplot), we added also a shaded region defined by the
 total average plus/minus the total standard deviation.
 Additionally moving averages and and moving standard deviations computations are
-displayed in dotted and dhased-dotted lines.
+displayed in dotted and dased-dotted lines.
 The main plot also displays the total average and the shaded region corresponds to
 the confidence interval defined by the moving average plus/minus the moving standard
 deviation computed using a window of 1/10 the length of the period of time.

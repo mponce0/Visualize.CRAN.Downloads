@@ -1,9 +1,9 @@
-movingFn <- function(x, fn=mean, period=length(x), type="forward") {
+movingFn <- function(x, fn=mean, period=length(x), direction="forward") {
 #' generic fn that computes the "fn" on a moving window
 #' @param  x  a numeric vector
 #' @param  fn  a function to be applied/computed, default is set to mean()
 #' @param  period  size of the "moving window", default set to the lenght of the vector
-#' @param  direction  type of moving avergage to consider: "forward", "centered", "backwards"
+#' @param  direction  type of moving avergage to consider: "forward", "centered", "backward"; ie. whether the window computation is ( "centered" / "forward" / "backward" ) wrt the data series
 #'
 #' @return  a vector with the 'moving operation' applied to the x vector
 

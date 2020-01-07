@@ -2,7 +2,7 @@
 #  -- M.Ponce
 
 
-source("R/utils.R")
+
 
 #################################################################################################
 ##	Utilities file for the Visualize.CRAN.Downloads package
@@ -223,14 +223,13 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 summaries <- function(data1, deltaTs=30) {
 #' function to display the summary of the data
 #' @param  data1  first dataset, eg. total data
-#' @param  data2  second dataset, eg. last month data
+#' @param  deltaTs  a numerical (integer) value, indicating the lenght --in days-- for selecting a subset of the original dataset; default value is 1 mont, ie. 30 days
 #'
 #' @export
 #'
 #' @examples
 #' packageXdownloads <- retrievePckgData("ehelp")[[1]]
-#' packageXlastmonth <- retrievePckgData("ehelp")[[2]]
-#' summaries(packageXdownloads,packageXlastmonth)
+#' summaries(packageXdownloads)
 
 	hdr <- paste(paste(rep("#",70),collapse=''), '\n')
 	hdr2 <- paste(paste(rep("-",35),collapse=''), '\n')

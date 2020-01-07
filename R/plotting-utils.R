@@ -18,6 +18,9 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 #' @param  pckg.stats.total  total downloads from the package
 #' @param  fileName  an optional string argument specifying the name of the file where to save the plots
 #' @param  combinePlts a boolean indicating whether the plots generated will be combined into one single figure or not
+#' @param  noMovAvg  a boolean indicating whether moving statistical estimators, such as, the moving average will be displayed
+#' @param  noConfBands  a boolean indicating whether a confidence band will be displayed
+#' @param  cutOff.pts  an integer value indicating the cut-off value to determine whether there would be a subsample for clarity sake in the plots
 #'
 #' @importFrom grDevices  dev.off pdf
 #' @importFrom graphics  abline axis axis.Date hist
@@ -29,14 +32,14 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 #' @examples
 #' packageData <- retrievePckgData("ggplot")
 #' totalDownloads <- packageData[[1]]
-#' lastmonthDownloads <- packageData[[2]]
+#' #lastmonthDownloads <- packageData[[2]]
 #' staticPlots(totalDownloads)
 #' staticPlots(totalDownloads,combinePlts=TRUE)
 
 ######################
 	emphasize <- function(x,y, delta, x0,x1,y0,y1, line.color="darkblue",line.wdth=2, subsample=FALSE) {
-	#' function to add trends in subsequent ranges of dates, eg. average in the last month
-	#' @keywords internal
+	# function to add trends in subsequent ranges of dates, eg. average in the last month
+	# @keywords internal
 
 		tot.lng <- length(x)
 		emph.range <- (tot.lng-(delta+0)):(tot.lng)
@@ -73,12 +76,14 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 
 	######################
 
-	confBand <- function(x,y, x0,x1,y0,y1, period=length(y)/10, lcolour='gray',ltype=4,lwidth=2, filling=TRUE) {
-	#' function to draw confidence bands, using generalized moving averages/sds
-	#' @keywords internal
+	confBand <- function(x,y, x0,x1,y0,y1, windowsNbr=10, period=length(y)/windowsNbr, lcolour='gray',ltype=4,lwidth=2, filling=TRUE) {
+	# function to draw confidence bands, using generalized moving averages/sds
+	# importFrom  grDevices  rgb
+	# importFrom  graphics polygon
+	# @keywords internal
 
 		lineWrapper <- function(x,y, x0,x1,y0,y1, line.col,line.lt,line.wdt) {
-		#' wrapper function to draw lines
+		# wrapper function to draw lines
 			lines(x,y, col=line.col, lty=line.lt, lwd=line.wdt,
 				xlim=c(x0,x1), ylim=c(y0,y1), ann=FALSE)
 		}

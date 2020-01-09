@@ -58,7 +58,7 @@ to generate one plot per figure by utilizing the `"nocombined"` option.
 In each of the plot a dahsed line is added representing the total average over time.
 In the "pulse" plot (third subplot), we added also a shaded region defined by the
 total average plus/minus the total standard deviation.
-Additionally moving averages and moving standard deviations computations are
+Additionally, moving averages and moving standard deviations computations are
 displayed in dotted and dased-dotted lines.
 The main plot also displays the total average and the shaded region corresponds to
 the confidence interval defined by the moving average plus/minus the moving standard
@@ -69,6 +69,8 @@ and the shaded regions can be avoided using the `"noConfBands"` flag.
 Two more "fixed" averages are presented in the main plot, indicating the average
 number of downloads for the package in the last two "units" of time, eg last month
 and last week, or last six-months and last month, etc.
+The absolute maximum number of downloads within the period of time,
+is also displayed as a filled dot and the actual value.
 
 
 ![Example of the static plot generated for the *ehelp* package](man/figures/DWNLDS_ehelp.png)

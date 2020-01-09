@@ -33,11 +33,11 @@ Visualize.CRAN.Downloads utilizes the `cranlogs` package for accessing the data 
 the downloads and the `plotly` package for generating interactive visualizations.
 The basic (static) plots are generated employing R basic capabilities.
 The basic plots are saved in the current directory in a PDF file named
-*"DWNLDS_packageName.pdf"*, where *'packageName'* is the actual name of the
+*"DWNLDS_**packageName**.pdf"*, where ***'packageName'*** is the actual name of the
 package analyzed.
 The interactive plots are saved in the current directory in an HTML file named
-*"Interactive_DWNLDS_packageName.html"*, where *'packageName'* is the actual name of the
-package analyzed.
+*"Interactive_DWNLDS_**packageName**.html"*, where ***'packageName'*** is the actual
+name of the package analyzed.
 
 
 ## Usage

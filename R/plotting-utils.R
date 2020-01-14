@@ -101,7 +101,7 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 			yprime <- c((ym+(ysd/2)),rev(ym-(ysd/2)))
 			if(sum(is.na(yprime))>0)
 				yprime[which(is.na(yprime))] <- yprime[min(which(is.na(yprime))-1)]
-			polygon(xprime,yprime, col=rgb(0.5,0.5,0.5, .25), border=NA)
+			graphics::polygon(xprime,yprime, col=grDevices::rgb(0.5,0.5,0.5, .25), border=NA)
 		}
 	}
 
@@ -190,12 +190,12 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 	if (!noMovAvg)
 		confBand(pckg.stats.total$date,pckg.stats.total$count,
 			fst.date,lst.date, 0,max.downloads*1.05,
-			,
+			,,
 			'royalblue',3,0.5, filling=FALSE)
 
 	confBand(pckg.stats.total$date,pckg.stats.total$count,
 		fst.date,lst.date, 0,max.downloads*1.05,
-		length(pckg.stats.total$count),
+		,length(pckg.stats.total$count),
 		'gray30',2,0.25, filling=!noConfBands)
 
 	#############################
@@ -233,7 +233,8 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 
 	if (!noMovAvg)
 		confBand(pckg.stats.total$date, (pckg.stats.total$count),
-			fst.date,lst.date,0,max.downloads*1.05,,
+			fst.date,lst.date,0,max.downloads*1.05,
+			,,
 			'royalblue',,1, filling=!noConfBands)
 
 	# print some stats in the plot

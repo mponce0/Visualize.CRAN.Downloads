@@ -10,57 +10,6 @@
 #################################################################################################
 
 
-### date's aux fns
-today <- function() {
-#' function that returns the current date 
-#' @keywords internal
-	t1 <- Sys.Date()
-		message("Ending date was not specifed, will assume today: ",t1)
-		return(t1)
-}
-
-lastyear.date <- function() {
-#' function that returns the date from one year ago
-#' @keywords internal
-	cur.date <- Sys.Date()
-		cur.year <- substr(cur.date,1,4)
-		lst.year <- as.integer(cur.year) - 1
-		t0 <- paste(lst.year,substr(cur.date,5,10),sep="")
-
-		message("Starting date was not specified, will assume a year from now: ",t0)
-		return(t0)
-}
-
-checkDates <- function(t0,t1) {
-#' function to check dates, ie that t0<t1 and t0!=t1
-#' @param  t0  initial date
-#' @param  t1  final date
-#' @return a list with t0 being [[1]] and t1 being [[2]]
-#'
-#' @keywords internal
-# check whether t0 is greater than t1
-	if (as.Date(t0) > as.Date(t1)) {
-# flip dates, t0 will be set to the older date
-		ttemp <- t0
-			t0 <- t1
-			t1 <- ttemp
-	} else if (as.Date(t0) == as.Date(t1)) {
-# dates should be different
-		stop(t0," and ", t1," should be different!")       
-	}
-	return(list(t0,t1))
-}
-
-
-# load and check needed packages/libraries...
-loadLibrary <- function(lib) {
-#' function to check and load an specific set of libraries
-#' @param  lib  is a list of packages to be loaded
-#' @keywords internal
-	if (require(lib,character.only = TRUE) == FALSE) stop(lib, " is needed for this package to work but is not installed in your system!")
-}
-
-
 
 ### retrieve package data
 retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
@@ -77,40 +26,40 @@ retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 #' retrievePckgData("ggplot")
 #' retrievePckgData("ggplot","2018-01-01","2019-01-01")
 
-# to access the logs from CRAN
+	# to access the logs from CRAN
 	loadLibrary("cranlogs")
 
-# check package name
-		if (is.null(pckg)) stop("Need a valid package name to process!")
+	# check package name
+	if (is.null(pckg)) stop("Need a valid package name to process!")
 
-# check dates
-			dates <- checkDates(t0,t1)
-				t0 <- dates[[1]]
-				t1 <- dates[[2]]
+	# check dates
+	dates <- checkDates(t0,t1)
+	t0 <- dates[[1]]
+	t1 <- dates[[2]]
 
-# retrieve data
-# TOTAL
-				pckg.stats.total <- cran_downloads(pckg, from=t0, to=t1)
+	# retrieve data
+	# TOTAL
+	pckg.stats.total <- cran_downloads(pckg, from=t0, to=t1)
 
-# Last Month
-#pckg.stats.lstmnt <- cran_downloads(pckg, when='last-month')
+	# Last Month
+	#pckg.stats.lstmnt <- cran_downloads(pckg, when='last-month')
 
-# check whether there is indeed available data, ie. an indirect indication of misspelling a package's name 
-				if (sum(pckg.stats.total$count) == 0) {
-					warning("Package *",pckg,"* yields no data in CRAN logs during the specified period of time (",t0,"...",t1,"); check that you have specified the correct name for the package.")
-						return(NULL)
-				}
+	# check whether there is indeed available data, ie. an indirect indication of misspelling a package's name 
+	if (sum(pckg.stats.total$count) == 0) {
+		warning("Package *",pckg,"* yields no data in CRAN logs during the specified period of time (",t0,"...",t1,"); check that you have specified the correct name for the package.")
+		return(NULL)
+	}
 
-# identify first not null entry in the set...
+	# identify first not null entry in the set...
 	i0t <- which(pckg.stats.total$count>0, arr.ind=TRUE)[1]
-		print(i0t)
-#print(pckg.stats.total)
-		if (i0t <= 5) i0t <- 1
-#i0m <- which(pckg.stats.lstmnt$count>0, arr.ind=TRUE)[1]
-#if (i0m <= 5) i0m <- 1
+	#print(i0t)
+	#print(pckg.stats.total)
+	if (i0t <= 5) i0t <- 1
+	#i0m <- which(pckg.stats.lstmnt$count>0, arr.ind=TRUE)[1]
+	#if (i0m <= 5) i0m <- 1
 
-#return(list(pckg.stats.total[i0t:length(pckg.stats.total$count),],pckg.stats.lstmnt[i0m:length(pckg.stats.lstmnt$count),]))
-			return(list(pckg.stats.total[i0t:length(pckg.stats.total$count),]))
+	#return(list(pckg.stats.total[i0t:length(pckg.stats.total$count),],pckg.stats.lstmnt[i0m:length(pckg.stats.lstmnt$count),]))
+	return(list(pckg.stats.total[i0t:length(pckg.stats.total$count),]))
 }
 
 
@@ -231,27 +180,94 @@ summaries <- function(data1, deltaTs=30) {
 #' packageXdownloads <- retrievePckgData("ehelp")[[1]]
 #' summaries(packageXdownloads)
 
+	printSummary <- function(data, time.orig="",hdr="--- \n") {
+
+
+		# some descriptive statistics first,
+		# ie. min, max, mean, median, ...
+
+		cat("Stats from ",time.orig, paste0("(",length(data$date)-2," days)"), '\n')
+        	cat(paste("period: ",data$date[1],' - ',data$date[length(data$date)]),'\n')
+        	cat(hdr)
+
+        	#print(summary(data))
+		print(summary(data$count))
+		cat('\n')
+        	
+		indicators <- c("Min.","Median","Mean","Max.")
+        	selectedIndicators <- c("Min.","Max.")
+        	sum1 <- summary(data$count)
+
+		for (ind in indicators) {
+			if (ind %in% selectedIndicators) {
+				info <- paste('  ',paste(ind, sum1[ind], "__", data$date[which(data$count == sum1[ind])]),'\n')
+			} else {
+				info <- paste('  ',paste(ind, round(sum1[ind],2)),'\n')
+			}
+			cat(info)
+		}
+	}
+
+
+	###########################
+	##### EXPERIMENTAL   ######
+	###########################
+	statAnal <- function(data){
+		# some statistical tests to check whether the downloads are following
+		# a random pattern from a normal/poisson/... distribution
+
+		t.tst <- t.test(data$count)
+		shapiro.tst <- shapiro.test(data$count)
+		xi2.tst <- chisq.test(data$count)
+
+		#cat(t.tst$method)
+		#cat(paste('\t',t.tst$statistic,"  --  ",t.tst$p.value,'\n'))
+		print(t.tst)
+		print(shapiro.tst)
+		print(xi2.tst)
+	}
+	############################
+	############################
+
+
+	# define some headers and line-breaks...
 	hdr <- paste(paste(rep("#",70),collapse=''), '\n')
 	hdr2 <- paste(paste(rep("-",35),collapse=''), '\n')
 	hdr3 <-  paste(paste(rep("~",60),collapse=''), '\n')
 
-	tot.days <- length(data1$date)
-        emph.range <- (tot.days-(deltaTs+1)):(tot.days)
-        data2 <- data1[emph.range,]
-
-	cat(hdr)
+	# display info about the package...
+	cat('\n'); cat(hdr)
 	line1 <- paste("Processing Package",data1$package[1])
 	len.line1 <- nchar(line1)
 	p.line1 <- paste(paste(rep("#",(70-len.line1-2)/2),collapse=''))
 	cat(p.line1,line1,p.line1,'\n')
 	cat(hdr)
-	cat(paste("period: ",data1$date[1],' - ',data1$date[length(data1$date)]),'\n')
-	cat(hdr2)
-	print(summary(data1))
+
+	printSummary(data1,"original selected period",hdr2)
 	cat(hdr3)
-	cat(paste("period: ",data2$date[1],' - ',data2$date[length(data2$date)]),'\n')
-	cat(hdr2)
-	print(summary(data2))
+
+	tot.days <- length(data1$date)
+
+	deltaTs <- time.units(tot.days)
+	#print(deltaTs)
+	deltas.units <- c("day","week","month","trimester","semester","year","2 years","5 years")
+
+        for (deltaT.ind in seq_along(deltaTs)) {
+		deltaT <- deltaTs[deltaT.ind]
+		#print(deltaT)
+		if (deltaT > 1) {
+			cat(hdr2)
+			#cat("Stats from last",deltas.units[deltaT.ind], paste0("(",deltaT," days)"), '\n')
+			emph.range <- (tot.days-(deltaT+1)):(tot.days)
+			#print(emph.range)
+			data2 <- data1[emph.range,]
+
+			printSummary(data2,paste("last",deltas.units[deltaT.ind]),hdr2)
+		}
+	}
+
+	# final line...
 	cat(hdr)
 	cat('\n\n\n')
 }
+

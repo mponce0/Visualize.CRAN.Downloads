@@ -13,7 +13,7 @@
 staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 		fileName=paste0("DWNLDS_",pckg.stats.total$package[1],".pdf"),
 		combinePlts=FALSE, noMovAvg=FALSE, noConfBands=FALSE,
-		cutOff.pts=250){
+		cutOff.pts=250, dbg=FALSE){
 #' function that generates visual trends of the package downloads logs from CRAN, it will generate 4 plots: two histograms, a pulse plot and the main plot is a plot of the downloads as a function of time
 #' @param  pckg.stats.total  total downloads from the package
 #' @param  fileName  an optional string argument specifying the name of the file where to save the plots
@@ -21,6 +21,7 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 #' @param  noMovAvg  a boolean indicating whether moving statistical estimators, such as, the moving average will be displayed
 #' @param  noConfBands  a boolean indicating whether a confidence band will be displayed
 #' @param  cutOff.pts  an integer value indicating the cut-off value to determine whether there would be a subsample for clarity sake in the plots
+#' @param  dbg  internal flag for activating debugging options, i.e. display furhter information in screen
 #'
 #' @importFrom grDevices  dev.off pdf
 #' @importFrom graphics  abline axis axis.Date hist
@@ -163,12 +164,15 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 	bins <- mean(bins.units[ceiling(max(which(periods))/1.)]+1, sqrt(tot.days), 15)
 	#bins <- bins.mnt
 	#bins <- sqrt(tot.days)/2
-	print(tot.days)
-	print(time.units)
-	print(bins.units)
-	print(periods)
-	print(max(which(periods)))
-	print(bins)
+
+	if (dbg) {
+		print(tot.days)
+		print(time.units)
+		print(bins.units)
+		print(periods)
+		print(max(which(periods)))
+		print(bins)
+	}
 
 	####### subplots ############
 

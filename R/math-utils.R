@@ -9,6 +9,7 @@ movingFn <- function(x, fn=mean, period=length(x), direction="forward") {
 
 	if (!is.numeric(x)) stop("argument x must be of type numeric!")
 	if (!is.function(fn)) stop("fn must be a function!")
+	#print(period)
 	if (!is.numeric(period)) stop("Argument period must be of type numeric!")
 
 	mavg <- c()

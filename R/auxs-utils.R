@@ -78,6 +78,33 @@ time.units <- function(tot.days) {
 
 
 
+time.intervals <- function(tot.days){
+#' function to identify units of times and time intervals for customizing axes of plots
+#' @param  tot.days  number of days in time interval to consider
+#' @return  a list with the unit of time and time interval
+#'
+#' @keywords internal
+
+	# more than 1.5 years
+	if (tot.days > 365*1.5) {
+		T.unit <- "7 mon"
+		everyT <- 3.5*30
+	# between a year and 1.5 years
+	} else if (tot.days > 365) {
+		T.unit <- "months"
+		everyT <- 30
+	# less than a year
+	} else {
+		T.unit <- "weeks"
+		everyT <- 7
+	}
+
+	# combine and return
+	return(list(T.unit,everyT))
+}
+
+
+
 # load and check needed packages/libraries...
 loadLibrary <- function(lib) {
 #' function to check and load an specific set of libraries

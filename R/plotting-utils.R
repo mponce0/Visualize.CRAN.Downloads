@@ -288,19 +288,11 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 		#	at=pckg.stats.total$date[seq_along(pckg.stats.total$date)%%6==0],
 		#	labels=as.character.Date(pckg.stats.total$date[seq_along(pckg.stats.total$date)%%6==0], "%d-%m-%y")
 		#)
-		# more than one 1.5 years
-		if (tot.days > 365*1.5) {
-			T.unit <- "7 mon"
-			everyT <- 3.5*30
-		# between a year and 1.5 years
-		} else if (tot.days > 365) {
-			T.unit <- "months"
-			everyT <- 30
-		# less than a year
-		} else {
-			T.unit <- "weeks"
-			everyT <- 7
-		}
+
+		time.int <- time.intervals(tot.days)
+		T.unit <- time.int[[1]]
+		everyT <- time.int[[2]]
+
 		selectDates <- as.Date(pckg.stats.total$date[seq_along(pckg.stats.total$date) %% everyT == 0])
 		selectDates.labels <- paste0( substr(month.name[as.integer(substr(selectDates,6,7))],1,3) )
 					#	,"-", substr(selectDates,1,4) )

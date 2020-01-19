@@ -96,6 +96,10 @@ of each the packages, ie. date-downloads-package.name.
 ![Example of the combined plot generated for the *ggplot2-plotly-gplots-lattice-scatterplot3d-rgl* package](man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-scatterplot3d-rgl.png)
 ![Example of the combined plot generated for the *ggplot2-plotly-gplots* package](man/figures/DWNLDS_ggplot2-plotly-gplots.png)
 
+:-------------------------:|:-------------------------:
+![Example of the combined plot generated for the *ggplot2-plotly-gplots-lattice-scatterplot3d-rgl* package](man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-scatterplot3d-rgl.png)
+  |  ![Example of the combined plot generated for the *ggplot2-plotly-gplots* package](man/figures/DWNLDS_ggplot2-plotly-gplots.png)
+
 
 ### Summary of options
 

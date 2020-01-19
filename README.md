@@ -96,11 +96,11 @@ of each the packages, ie. date-downloads-package.name.
 ![Example of the combined plot generated for the *ggplot2-plotly-gplots-lattice-scatterplot3d-rgl* package](man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-scatterplot3d-rgl.png)
 ![Example of the combined plot generated for the *ggplot2-plotly-gplots* package](man/figures/DWNLDS_ggplot2-plotly-gplots.png)
 
-Solarized dark             |  Solarized Ocean
-:-------------------------:|:-------------------------:
-![Example of the combined plot generated for the *ggplot2-plotly-gplots-lattice-scatterplot3d-rgl* package](man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-scatterplot3d-rgl.png)
-  |  ![Example of the combined plot generated for the *ggplot2-plotly-gplots* package](man/figures/DWNLDS_ggplot2-plotly-gplots.png)
-
+<p float="left">
+  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-scatterplot3d-rgl.png" width="100" />
+  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots.png" width="100" /> 
+  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots.png" width="100" />
+</p>
 
 ### Summary of options
 

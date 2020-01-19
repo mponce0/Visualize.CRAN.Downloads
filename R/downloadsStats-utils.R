@@ -109,12 +109,12 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 	t1 <- dates[[2]]
 
 	# check options...
-	validOpts <- tolower(c("nostatic","nointeractive", "nocombined", "noMmovinBand","noConfBands", "compare"))
+	validOpts <- tolower(c("nostatic","nointeractive", "nocombined", "noMovAvg","noConfBand", "compare"))
 	checkOpts(opts,validOpts)
 
 
 	# initialize lists for storaging info
-	pckgDwnlds <- list()
+	pckgDwnlds.lst <- list()
 	pckg.stats.lstmnt <- list()
 
 
@@ -140,9 +140,9 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 				# set defaults
 				cmb <- TRUE; noCBs <- FALSE; noMAvgs <- FALSE
 
-				# alternate depending on optiosn provided by the user
+				# alternate depending on options provided by the user
 				if ('nocombined' %in% tolower(opts))  cmb <- FALSE
-				if ('noconfbands' %in% tolower(opts))  noCBs <- TRUE
+				if ('noconfband' %in% tolower(opts))  noCBs <- TRUE
 				if ('nomovavg' %in% tolower(opts))  noMAvgs <- TRUE
 
 				staticPlots(pckg.stats.total, combinePlts=cmb, noMovAvg=noMAvgs, noConfBands=noCBs)
@@ -156,12 +156,91 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 			}
 
 			### comparison between several packages
-
+			if ( "compare" %in% tolower(opts) ) {
+				if (length(pckg.lst) <= 1)
+					warning("The 'compare' option is available when more than 1 package is indicated!")
+				pckgDwnlds.lst <- c(pckgDwnlds.lst,pckgDwnlds)
+			}
 
 			# summaries
 			#summaries(pckg.stats.total,pckg.stats.lstmnt)
 			summaries(pckg.stats.total)
 		}
+	}
+
+	if ( "compare" %in% tolower(opts) ) {
+		#print(str(pckgDwnlds.lst))
+		#lapply(pckgDwnlds.lst,summary)
+
+		nbrPckgs <- length(pckgDwnlds.lst)
+		dates.min <- c()
+		dates.max <- c()
+		counts.min <- c()
+		counts.max <- c()
+		pckgNames <- c()
+		for (j in 1:nbrPckgs) {
+			#print(pckgDwnlds.lst[[j]]["date"][[(sapply(pckgDwnlds.lst[[j]]["date"],min))]])
+			##dates.min <- c(dates.min, sapply(pckgDwnlds.lst[[j]]["date"],min))
+			##dates.max <- c(dates.max, sapply(pckgDwnlds.lst[[j]]["date"],max))
+			#dates.min <- c(dates.min, as.character(pckgDwnlds.lst[[j]]["date"][[1]]))
+			#dates.max <- c(dates.max, as.character(pckgDwnlds.lst[[j]]["date"][[length(pckgDwnlds.lst[[j]]["date"])]]))
+			counts.min <- c(counts.min, sapply(pckgDwnlds.lst[[j]]["count"],min))
+			counts.max <- c(counts.max, sapply(pckgDwnlds.lst[[j]]["count"],max))
+			#pckgNames <- c(pckgNames, sapply(pckgDwnlds.lst[[j]]["package"],unique))
+			pckgNames <- c(pckgNames, pckgDwnlds.lst[[j]][["package"]][[1]])
+		}
+
+
+		min.date <- as.Date(as.character(t0))
+		max.date <- as.Date(as.character(t1))
+		xrange <- c(min.date,max.date)
+		#min.date <- min(dates.min)
+		#max.date <- max(dates.max)
+		counts.min <- (min(counts.min))
+		counts.max <- (max(counts.max)*1.05)
+		yrange <- c(counts.min,counts.max)
+		#print(xrange)
+		#print(yrange)
+
+		fileName <- paste0("DWNLDS_",paste(pckgNames,collapse='-'),".pdf")
+		message("Combined plots for packges: ",paste(pckgNames,collapse=' ')," will be saved in ",fileName)
+		pdf(fileName)
+		par(mar=c(3,2.5,0.85,0.5))
+		#plot(pckgDwnlds.lst[[1]]$date, pckgDwnlds.lst[[1]]$count, 'n')
+		if (cmb)  plot(xrange,yrange, 'n', xlim=xrange, ylim=yrange, ann=FALSE, axes=FALSE)
+
+		for (j in 1:length(pckgDwnlds.lst)) {
+			if (cmb) par(new=TRUE)
+			yvar <- (pckgDwnlds.lst[[j]]$count)
+			if (!cmb) yrange <- c(min(yvar),max(yvar))
+			plot(pckgDwnlds.lst[[j]]$date, yvar, 'o', col=j, lwd=0.35, cex=0.35,
+				#label=pckgDwnlds.lst[[j]]$package[[1]],
+				xlim=xrange, ylim=yrange,
+                        	ann=!cmb, axes=!cmb )
+
+			if (!noCBs) confBand(pckgDwnlds.lst[[j]]$date,pckgDwnlds.lst[[j]]$count,
+                                t0,t1, 0,counts.max,
+                                ,length(pckgDwnlds.lst[[j]]$count),
+                                j,,1.25, filling=FALSE)
+
+			if (!noMAvgs) confBand(pckgDwnlds.lst[[j]]$date,pckgDwnlds.lst[[j]]$count,
+				t0,t1, 0,counts.max,
+				,,
+				j,,0.5, filling=TRUE)
+
+			legend("top", pckgNames,
+				cex=0.5,box.lty=0, pch=1,lty=1,pt.cex=0.5,
+				col=1:length(pckgDwnlds.lst),border='white')
+		}
+
+		#print(min.date)
+		axis.Date(1,at = seq(min.date, max.date, by=T.unit))
+		axis(2)
+		#box()
+
+		dev.off()
+
+		return(invisible(pckgDwnlds.lst))
 	}
 }
 

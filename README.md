@@ -48,9 +48,7 @@ By default the package will generate the static and interactive representations,
 this can be turned off by indicating the `"nostatic"` and/or `"nointeractive"` as
 options in the arguments of the main function.
 
-A comparison plot between multiple package should be explicity requested using
-the `"comparison"` option in the list of arguments.
-
+### Static Plots
 The static plot actually includes 4 different plots: a histogram of downloads vs time,
 a histogram of number of downloads, a pulse plot and a download vs time plot.
 The default style is to generate these 4 plots in the same figure, but it can be switch
@@ -63,8 +61,8 @@ displayed in dotted and dased-dotted lines.
 The main plot also displays the total average and the shaded region corresponds to
 the confidence interval defined by the moving average plus/minus the moving standard
 deviation computed using a window of 1/10 the length of the period of time.
-The display of the moving estimators can be turned off, including the `"noMovingAvgs"` flag;
-and the shaded regions can be avoided using the `"noConfBands"` flag.
+The display of the moving estimators can be turned off, including the `"noMovAvg"` flag;
+and the shaded regions can be avoided using the `"noConfBand"` flag.
 
 Two more "fixed" averages are presented in the main plot, indicating the average
 number of downloads for the package in the last two "units" of time, eg last month
@@ -76,6 +74,28 @@ is also displayed as a filled dot and the actual value.
 ![Example of the static plot generated for the *ehelp* package](man/figures/DWNLDS_ehelp.png)
 
 
+### Comparison Plot
+A comparison plot between multiple package should be explicity requested using
+the `"compare"` option in the list of arguments.
+
+For using this feature more than one package should be indicated!
+
+The comparison plot will be saved into a PDF file named *"DWNLDS_**packageNames**.pdf"*,
+where **packageNames** is the combination of all the packages indicated to process.
+When the `"compare"` option is indicated, it will also check for the `"nocombined"`
+option to either generate the comparison plot combining all packages in the same
+plot or in separated ones, but always within the same file.
+Similarly, the `"noMovAvg"` and `"noConfBand"` flags can be used for turning
+off the moving averages indicators and overall average ones.
+
+Additionally, when the `"compare"` option is indicated the `processPckg` function
+will return a nested list containing in each element a list with the information
+of each the packages, ie. date-downloads-package.name.
+
+
+![Example of the combined plot generated for the *ehelp-docstring-ggplot* package](man/figures/DWNLDS_ehelp.png)
+
+
 ### Summary of options
 
 option             | action
@@ -83,9 +103,9 @@ option             | action
 `"nostatic"`       | disables static plots
 `"nointeractive"`  | disables interactive plots
 `"nocombined"`     | disables combination of static plots, ie. each plot will be a separated figure
-`"noConfBands"`    | disables the shading of "confidence bands (regions)"
-`"noMovingAvgs"`   | disables the display of "moving" estimators
-`"comparison"`     | generates a plot comparing the downloads of multiple packages
+`"noConfBand"`    | disables the shading of "confidence bands (regions)"
+`"noMovAvg"`   | disables the display of "moving" estimators
+`"compare"`     | generates a plot comparing the downloads of multiple packages
 ---------------------------
 
 
@@ -126,4 +146,7 @@ processPckg(c("ehelp","plotly","ggplot"), "2001-01-01")
 processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts="nostatic")
 
 processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts=c("nointeractive","combined"))
+
+pckg.data <- processPckg(c('plotly','gplots','lattice','scatterplot3d','rgl'),'2017-01-01',
+opts=c('nointeractive','compare','noMovAvg','noConfBand'))
 ```

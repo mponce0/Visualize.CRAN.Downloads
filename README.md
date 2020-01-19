@@ -48,9 +48,7 @@ By default the package will generate the static and interactive representations,
 this can be turned off by indicating the `"nostatic"` and/or `"nointeractive"` as
 options in the arguments of the main function.
 
-A comparison plot between multiple package should be explicity requested using
-the `"comparison"` option in the list of arguments.
-
+### Static Plots
 The static plot actually includes 4 different plots: a histogram of downloads vs time,
 a histogram of number of downloads, a pulse plot and a download vs time plot.
 The default style is to generate these 4 plots in the same figure, but it can be switch
@@ -74,6 +72,21 @@ is also displayed as a filled dot and the actual value.
 
 
 ![Example of the static plot generated for the *ehelp* package](man/figures/DWNLDS_ehelp.png)
+
+
+### Comparison Plot
+A comparison plot between multiple package should be explicity requested using
+the `"comparison"` option in the list of arguments.
+For using this feature more than one package should be indicated!
+The comparison plot will be then saved into a PDF file named *"DWNLDS_**packageNames**.pdf"*,
+where **packageNames** is the combination of all the packages indicated to process.
+When the `"comparison"` option is indicated, it will also use the `"nocombined"`
+option to either generate the comparison plot combining all packages in the same
+plot or in separated ones, but always within the same file.
+Similarly, the `"noMovingAvgs"` and `"noConfBands"` flags can be used for turning
+off the moving averages indicators and overall average ones.
+
+![Example of the combined plot generated for the *ehelp-docstring-ggplot* package](man/figures/DWNLDS_ehelp.png)
 
 
 ### Summary of options

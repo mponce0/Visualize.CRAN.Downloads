@@ -93,7 +93,7 @@ will return a nested list containing in each element a list with the information
 of each the packages, ie. date-downloads-package.name.
 
 
-![Example of the combined plot generated for the *ehelp-docstring-ggplot* package](man/figures/DWNLDS_ehelp.png)
+![Example of the combined plot generated for the *ggplot2-plotly-gplots-lattice-scatterplot3d-rgl* package](man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-scatterplot3d-rgl.png)
 
 
 ### Summary of options

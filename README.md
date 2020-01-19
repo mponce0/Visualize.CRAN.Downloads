@@ -147,5 +147,6 @@ processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts="nostatic")
 
 processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts=c("nointeractive","combined"))
 
-processPckg(c('plotly','gplots','lattice','scatterplot3d','rgl'),'2017-01-01',opts=c('nointeractive','compare','noMovAvg','noConfBand'))
+pckg.data <- processPckg(c('plotly','gplots','lattice','scatterplot3d','rgl'),'2017-01-01',
+opts=c('nointeractive','compare','noMovAvg','noConfBand'))
 ```

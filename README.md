@@ -98,9 +98,9 @@ of each the packages, ie. date-downloads-package.name.
 -->
 
 <p float="left">
-  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-scatterplot3d-rgl.png" width="30%" />
-  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots.png" width="30%" /> 
-  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice.png" width="30%" />
+  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-scatterplot3d-rgl.png" width="50%" />
+<!--  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots.png" width="30%" /> -->
+  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice.png" width="50%" />
 </p>
 
 ### Summary of options

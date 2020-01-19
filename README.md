@@ -76,19 +76,19 @@ is also displayed as a filled dot and the actual value.
 
 ### Comparison Plot
 A comparison plot between multiple package should be explicity requested using
-the `"comparison"` option in the list of arguments.
+the `"compare"` option in the list of arguments.
 
 For using this feature more than one package should be indicated!
 
 The comparison plot will be saved into a PDF file named *"DWNLDS_**packageNames**.pdf"*,
 where **packageNames** is the combination of all the packages indicated to process.
-When the `"comparison"` option is indicated, it will also check for the `"nocombined"`
+When the `"compare"` option is indicated, it will also check for the `"nocombined"`
 option to either generate the comparison plot combining all packages in the same
 plot or in separated ones, but always within the same file.
 Similarly, the `"noMovAvg"` and `"noConfBand"` flags can be used for turning
 off the moving averages indicators and overall average ones.
 
-Additionally, when the `"comparison"` option is indicated the `processPckg` function
+Additionally, when the `"compare"` option is indicated the `processPckg` function
 will return a nested list containing in each element a list with the information
 of each the packages, ie. date-downloads-package.name.
 
@@ -105,7 +105,7 @@ option             | action
 `"nocombined"`     | disables combination of static plots, ie. each plot will be a separated figure
 `"noConfBand"`    | disables the shading of "confidence bands (regions)"
 `"noMovAvg"`   | disables the display of "moving" estimators
-`"comparison"`     | generates a plot comparing the downloads of multiple packages
+`"compare"`     | generates a plot comparing the downloads of multiple packages
 ---------------------------
 
 

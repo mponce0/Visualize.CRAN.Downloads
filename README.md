@@ -61,8 +61,8 @@ displayed in dotted and dased-dotted lines.
 The main plot also displays the total average and the shaded region corresponds to
 the confidence interval defined by the moving average plus/minus the moving standard
 deviation computed using a window of 1/10 the length of the period of time.
-The display of the moving estimators can be turned off, including the `"noMovingAvgs"` flag;
-and the shaded regions can be avoided using the `"noConfBands"` flag.
+The display of the moving estimators can be turned off, including the `"noMovAvg"` flag;
+and the shaded regions can be avoided using the `"noConfBand"` flag.
 
 Two more "fixed" averages are presented in the main plot, indicating the average
 number of downloads for the package in the last two "units" of time, eg last month
@@ -83,7 +83,7 @@ where **packageNames** is the combination of all the packages indicated to proce
 When the `"comparison"` option is indicated, it will also use the `"nocombined"`
 option to either generate the comparison plot combining all packages in the same
 plot or in separated ones, but always within the same file.
-Similarly, the `"noMovingAvgs"` and `"noConfBands"` flags can be used for turning
+Similarly, the `"noMovAvg"` and `"noConfBand"` flags can be used for turning
 off the moving averages indicators and overall average ones.
 
 ![Example of the combined plot generated for the *ehelp-docstring-ggplot* package](man/figures/DWNLDS_ehelp.png)
@@ -96,8 +96,8 @@ option             | action
 `"nostatic"`       | disables static plots
 `"nointeractive"`  | disables interactive plots
 `"nocombined"`     | disables combination of static plots, ie. each plot will be a separated figure
-`"noConfBands"`    | disables the shading of "confidence bands (regions)"
-`"noMovingAvgs"`   | disables the display of "moving" estimators
+`"noConfBand"`    | disables the shading of "confidence bands (regions)"
+`"noMovAvg"`   | disables the display of "moving" estimators
 `"comparison"`     | generates a plot comparing the downloads of multiple packages
 ---------------------------
 
@@ -139,4 +139,6 @@ processPckg(c("ehelp","plotly","ggplot"), "2001-01-01")
 processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts="nostatic")
 
 processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts=c("nointeractive","combined"))
+
+processPckg(c('plotly','gplots','lattice','scatterplot3d','rgl'),'2017-01-01',opts=c('nointeractive','compare','noMovAvg','noConfBand'))
 ```

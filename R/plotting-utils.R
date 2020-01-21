@@ -9,6 +9,61 @@
 #################################################################################################
 
 
+confBand <- function(x,y, x0,x1,y0,y1, windowsNbr=10, period=length(y)/windowsNbr, lcolour='gray',ltype=4,lwidth=2, filling=TRUE) {
+# function to draw confidence bands, using generalized moving averages/sds
+# importFrom  grDevices  rgb
+# importFrom  graphics polygon
+# @keywords internal
+
+                lineWrapper <- function(x,y, x0,x1,y0,y1, line.col,line.lt,line.wdt) {
+                # wrapper function to draw lines
+                        lines(x,y, col=line.col, lty=line.lt, lwd=line.wdt,
+                                xlim=c(x0,x1), ylim=c(y0,y1), ann=FALSE)
+                }
+
+                ym <- movingFn(y,mean,period)
+                ysd <- movingFn(y,sd,period)
+
+                lineWrapper(x,ym, x0,x1,y0,y1, lcolour,ltype,lwidth)
+                lineWrapper(x,ym+(ysd/2), x0,x1,y0,y1, lcolour,ltype+1,lwidth/2)
+                lineWrapper(x,ym-(ysd/2), x0,x1,y0,y1, lcolour,ltype+1,lwidth/2)
+
+                # shading of the confidence region
+                if (filling){
+                        xprime <- c(x,rev(x))
+                        yprime <- c((ym+(ysd/2)),rev(ym-(ysd/2)))
+                        if(sum(is.na(yprime))>0)
+                                yprime[which(is.na(yprime))] <- yprime[min(which(is.na(yprime))-1)]
+                        graphics::polygon(xprime,yprime, col=grDevices::rgb(0.5,0.5,0.5, .25), border=NA)
+                }
+        }
+
+######################
+
+axes.TimePlt <- function(tot.days,pckg.stats.total,yaxis.side=4) {
+
+	time.int <- time.intervals(tot.days)
+	T.unit <- time.int[[1]]
+	everyT <- time.int[[2]]
+
+	selectDates <- as.Date(pckg.stats.total$date[seq_along(pckg.stats.total$date) %% everyT == 0])
+	selectDates.labels <- paste0( substr(month.name[as.integer(substr(selectDates,6,7))],1,3) )
+                                        #       ,"-", substr(selectDates,1,4) )
+
+	axis.Date(1,at = seq(min(pckg.stats.total$date), max(pckg.stats.total$date), by=T.unit))
+
+	if (tot.days-1 > 365) {
+		#axis(1,at=NULL, labels=F)
+		#text(x = selectDates, par("usr")[3]*.97, labels = substr(month.name[as.integer(substr(selectDates,nchr0,nchr1))],1,3), pos = 1, xpd = TRUE,cex=.85)
+		text(x = selectDates, par("usr")[3]*.995, labels = selectDates.labels, srt = 45, pos = 1, xpd = TRUE,cex=.65)
+	}
+	if (yaxis.side != 0) axis(side=yaxis.side)
+
+}
+
+######################
+
+
 ### static plots
 staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 		fileName=paste0("DWNLDS_",pckg.stats.total$package[1],".pdf"),
@@ -73,37 +128,6 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 					#sample(c(0.95,1.075),1)*range.meanVal,
 					paste(as.integer(range.meanVal)),
 					col=line.color, cex=1.175 )
-	}
-
-	######################
-
-	confBand <- function(x,y, x0,x1,y0,y1, windowsNbr=10, period=length(y)/windowsNbr, lcolour='gray',ltype=4,lwidth=2, filling=TRUE) {
-	# function to draw confidence bands, using generalized moving averages/sds
-	# importFrom  grDevices  rgb
-	# importFrom  graphics polygon
-	# @keywords internal
-
-		lineWrapper <- function(x,y, x0,x1,y0,y1, line.col,line.lt,line.wdt) {
-		# wrapper function to draw lines
-			lines(x,y, col=line.col, lty=line.lt, lwd=line.wdt,
-				xlim=c(x0,x1), ylim=c(y0,y1), ann=FALSE)
-		}
-
-		ym <- movingFn(y,mean,period)
-		ysd <- movingFn(y,sd,period)
-
-		lineWrapper(x,ym, x0,x1,y0,y1, lcolour,ltype,lwidth)
-		lineWrapper(x,ym+(ysd/2), x0,x1,y0,y1, lcolour,ltype+1,lwidth/2)
-		lineWrapper(x,ym-(ysd/2), x0,x1,y0,y1, lcolour,ltype+1,lwidth/2)
-
-		# shading of the confidence region
-		if (filling){
-			xprime <- c(x,rev(x))
-			yprime <- c((ym+(ysd/2)),rev(ym-(ysd/2)))
-			if(sum(is.na(yprime))>0)
-				yprime[which(is.na(yprime))] <- yprime[min(which(is.na(yprime))-1)]
-			graphics::polygon(xprime,yprime, col=grDevices::rgb(0.5,0.5,0.5, .25), border=NA)
-		}
 	}
 
 	######################
@@ -289,22 +313,23 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 		#	labels=as.character.Date(pckg.stats.total$date[seq_along(pckg.stats.total$date)%%6==0], "%d-%m-%y")
 		#)
 
-		time.int <- time.intervals(tot.days)
-		T.unit <- time.int[[1]]
-		everyT <- time.int[[2]]
-
-		selectDates <- as.Date(pckg.stats.total$date[seq_along(pckg.stats.total$date) %% everyT == 0])
-		selectDates.labels <- paste0( substr(month.name[as.integer(substr(selectDates,6,7))],1,3) )
-					#	,"-", substr(selectDates,1,4) )
-
-		axis.Date(1,at = seq(min(pckg.stats.total$date), max(pckg.stats.total$date), by=T.unit))
-
-		if (tot.days-1 > 365) {
-			#axis(1,at=NULL, labels=F)
-			#text(x = selectDates, par("usr")[3]*.97, labels = substr(month.name[as.integer(substr(selectDates,nchr0,nchr1))],1,3), pos = 1, xpd = TRUE,cex=.85)
-			text(x = selectDates, par("usr")[3]*.995, labels = selectDates.labels, srt = 45, pos = 1, xpd = TRUE,cex=.65)
-		}
-                axis(side=4)
+#.#		time.int <- time.intervals(tot.days)
+#.#		T.unit <- time.int[[1]]
+#.#		everyT <- time.int[[2]]
+#.#
+#.#		selectDates <- as.Date(pckg.stats.total$date[seq_along(pckg.stats.total$date) %% everyT == 0])
+#.#		selectDates.labels <- paste0( substr(month.name[as.integer(substr(selectDates,6,7))],1,3) )
+#.#					#	,"-", substr(selectDates,1,4) )
+#.#
+#.#		axis.Date(1,at = seq(min(pckg.stats.total$date), max(pckg.stats.total$date), by=T.unit))
+#.#
+#.#		if (tot.days-1 > 365) {
+#.#			#axis(1,at=NULL, labels=F)
+#.#			#text(x = selectDates, par("usr")[3]*.97, labels = substr(month.name[as.integer(substr(selectDates,nchr0,nchr1))],1,3), pos = 1, xpd = TRUE,cex=.85)
+#.#			text(x = selectDates, par("usr")[3]*.995, labels = selectDates.labels, srt = 45, pos = 1, xpd = TRUE,cex=.65)
+#.#		}
+#.#                axis(side=4)
+	axes.TimePlt(tot.days,pckg.stats.total)
 #        } else {
 #                axis(side=c(1:4))
 #        }
@@ -419,5 +444,115 @@ interactivePlots <- function(downloads.data, mytitle=paste(downloads.data$packag
 }
 
 
+###### Comparison Plot
+comparison.Plt <- function(pckgDwnlds.lst, t0,t1, cmb=TRUE,noMAvgs=FALSE,noCBs=FALSE){
+#' function that generates a comparison plot among several packages
+#' @param  pckgDwnlds.lst  nested list containing the several packages to process
+#' @param  t0  initial date
+#' @param  t1  final date
+#' @param  cmb  boolean flag, indicating whether the plots are shown in the same (default) graph or not
+#' @param  noMAvgs  boolean flag, indicating whether moving averages are displayed (default) or NOT --set to TRUE--
+#' @param  noCBs  boolean flag, indicating whether shaded confidence intervals are displayed (default) or NOT  --set to TRUE--
+#'
+#' @importFrom graphics  legend
+#'
+#' @keywords internal
+
+	#print(str(pckgDwnlds.lst))
+	#lapply(pckgDwnlds.lst,summary)
+
+	# define some containers for aggregating information about the packages...
+	nbrPckgs <- length(pckgDwnlds.lst)
+	dates.min <- c()
+	dates.max <- c()
+	counts.min <- c()
+	counts.max <- c()
+	pckgNames <- c()
+	tot.days <- 0
+
+	for (j in 1:nbrPckgs) {
+		#print(pckgDwnlds.lst[[j]]["date"][[(sapply(pckgDwnlds.lst[[j]]["date"],min))]])
+		##dates.min <- c(dates.min, sapply(pckgDwnlds.lst[[j]]["date"],min))
+		##dates.max <- c(dates.max, sapply(pckgDwnlds.lst[[j]]["date"],max))
+		#dates.min <- c(dates.min, as.character(pckgDwnlds.lst[[j]]["date"][[1]]))
+		#dates.max <- c(dates.max, as.character(pckgDwnlds.lst[[j]]["date"][[length(pckgDwnlds.lst[[j]]["date"])]]))
+		counts.min <- c(counts.min, sapply(pckgDwnlds.lst[[j]]["count"],min))
+		counts.max <- c(counts.max, sapply(pckgDwnlds.lst[[j]]["count"],max))
+		#pckgNames <- c(pckgNames, sapply(pckgDwnlds.lst[[j]]["package"],unique))
+		pckgNames <- c(pckgNames, pckgDwnlds.lst[[j]][["package"]][[1]])
+
+		# tot.days <- max(tot.days,length(pckgDwnlds.lst[[j]][["date"]]))
+		nbr.days <- length(pckgDwnlds.lst[[j]][["date"]])
+		if (tot.days < nbr.days) {
+			tot.days <- nbr.days
+			j.peak <- j
+		}
+	}
+
+
+	min.date <- as.Date(as.character(t0))
+	max.date <- as.Date(as.character(t1))
+	if (min.date != pckgDwnlds.lst[[j.peak]][["date"]][[1]]) {
+		warning("Date range adjustment: initial date reset from ", min.date," to ", pckgDwnlds.lst[[j.peak]][["date"]][[1]], call.=FALSE)
+		min.date <- pckgDwnlds.lst[[j.peak]][["date"]][[1]]
+	}
+	if (min.date != pckgDwnlds.lst[[j.peak]][["date"]][[tot.days]]) {
+		 warning("Date range adjustment: initial date reset from ", min.date," to ", pckgDwnlds.lst[[j.peak]][["date"]][[tot.days]], call.=FALSE)
+		max.date <- pckgDwnlds.lst[[j.peak]][["date"]][[tot.days]]
+	}
+	xrange <- c(min.date,max.date)
+
+	#min.date <- min(dates.min)
+	#max.date <- max(dates.max)
+	counts.min <- (min(counts.min))
+	counts.max <- (max(counts.max)*1.05)
+	yrange <- c(counts.min,counts.max)
+	#print(xrange)
+	#print(yrange)
+
+	fileName <- paste0("DWNLDS_",paste(pckgNames,collapse='-'),".pdf")
+	message("Combined plots for packges: ",paste(pckgNames,collapse=' ')," will be saved in ",fileName)
+	pdf(fileName)
+	par(mar=c(3,2.5,0.85,0.5))
+	#plot(pckgDwnlds.lst[[1]]$date, pckgDwnlds.lst[[1]]$count, 'n')
+	if (cmb)  plot(xrange,yrange, 'n', xlim=xrange, ylim=yrange, ann=FALSE, axes=FALSE)
+
+	for (j in 1:length(pckgDwnlds.lst)) {
+		if (cmb) par(new=TRUE)
+		yvar <- (pckgDwnlds.lst[[j]]$count)
+		if (!cmb) yrange <- c(min(yvar),max(yvar))
+		plot(pckgDwnlds.lst[[j]]$date, yvar, 'o', col=j, lwd=0.35, cex=0.35,
+			xlim=xrange, ylim=yrange,
+			ann=!cmb, axes=!cmb )
+
+		if (!noCBs) confBand(pckgDwnlds.lst[[j]]$date,pckgDwnlds.lst[[j]]$count,
+					t0,t1, 0,counts.max,
+					,length(pckgDwnlds.lst[[j]]$count),
+					j,,1.25, filling=FALSE)
+
+		if (!noMAvgs) confBand(pckgDwnlds.lst[[j]]$date,pckgDwnlds.lst[[j]]$count,
+					t0,t1, 0,counts.max,
+					,,
+					j,,0.5, filling=TRUE)
+
+		legend("topright",paste("Date range ",min.date,"/",max.date),
+			cex=0.65, box.lty=0)
+		legend("top", pckgNames,
+			cex=0.5,box.lty=0, pch=1,lty=1,pt.cex=0.5,
+			col=1:length(pckgDwnlds.lst),border='white')
+	}
+
+	# draw axes...
+        #T.unit <- time.intervals(tot.days)[[1]]
+	#print(T.unit)
+	#axis.Date(1,at = seq(min.date, max.date, by=T.unit))
+	#axis(2)
+	axes.TimePlt(tot.days,pckgDwnlds.lst[[j.peak]],2)
+	#axis(side=2, at=seq(counts.min,counts.max, by=abs(counts.max-counts.min)/10),labels=FALSE)
+	#box()
+
+	# close file...
+	dev.off()
+} 
 
 #########################################################################################

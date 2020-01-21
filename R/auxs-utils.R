@@ -85,15 +85,23 @@ time.intervals <- function(tot.days){
 #'
 #' @keywords internal
 
-	# more than 1.5 years
-	if (tot.days > 365*1.5) {
+	# more than 5 years
+        if (tot.days > 365*5) {
+                T.unit <- "7 mon"
+                everyT <- 3.5*30
+	# more than 2 years
+	} else if (tot.days > 365*2) {
 		T.unit <- "7 mon"
 		everyT <- 3.5*30
-	# between a year and 1.5 years
+	# between a year and 2 years
 	} else if (tot.days > 365) {
 		T.unit <- "months"
 		everyT <- 30
-	# less than a year
+	# between a year and 3 months
+	} else if (tot.days > (365/12)*3) {
+		T.unit <- "2 weeks"
+		everyT <- 15
+	# less than 3 months
 	} else {
 		T.unit <- "weeks"
 		everyT <- 7

@@ -218,26 +218,6 @@ summaries <- function(data1, deltaTs=30) {
 	}
 
 
-	###########################
-	##### EXPERIMENTAL   ######
-	###########################
-	statAnal <- function(data){
-		# some statistical tests to check whether the downloads are following
-		# a random pattern from a normal/poisson/... distribution
-
-		t.tst <- t.test(data$count)
-		shapiro.tst <- shapiro.test(data$count)
-		xi2.tst <- chisq.test(data$count)
-
-		#cat(t.tst$method)
-		#cat(paste('\t',t.tst$statistic,"  --  ",t.tst$p.value,'\n'))
-		print(t.tst)
-		print(shapiro.tst)
-		print(xi2.tst)
-	}
-	############################
-	############################
-
 
 	# define some headers and line-breaks...
 	hdr <- paste(paste(rep("#",70),collapse=''), '\n')

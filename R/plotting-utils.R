@@ -86,11 +86,14 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' packageData <- retrievePckgData("ggplot")
 #' totalDownloads <- packageData[[1]]
 #' #lastmonthDownloads <- packageData[[2]]
 #' staticPlots(totalDownloads)
 #' staticPlots(totalDownloads,combinePlts=TRUE)
+#' }
+#'
 
 ######################
 	emphasize <- function(x,y, delta, x0,x1,y0,y1, line.color="darkblue",line.wdth=2, subsample=FALSE) {
@@ -369,8 +372,11 @@ interactivePlots <- function(downloads.data, mytitle=paste(downloads.data$packag
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' packageXdownloads <- retrievePckgData("ggplot")[[1]]
 #' interactivePlots(packageXdownloads)
+#' }
+#'
        
         loadLibrary("plotly")
 

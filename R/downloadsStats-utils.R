@@ -23,10 +23,12 @@ retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 #' @export
 #'
 #' @examples
-#'\dontrun{
+#' \donttest{
+#' \dontrun{
 #' retrievePckgData("ggplot")
 #' retrievePckgData("ggplot","2018-01-01","2019-01-01")
-#'}
+#' }
+#' }
 
 	# to access the logs from CRAN
 	loadLibrary("cranlogs")
@@ -76,13 +78,13 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 #' @export
 #'
 #' @examples
-#'\dontrun{
+#' \donttest{\dontrun{
 #' processPckg("ehelp")
 #' processPckg(c("ehelp","plotly","ggplot"), "2001-01-01")
 #' processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts="nostatic")
 #' processPckg(c("ehelp","plotly","ggplot"), "2001-01-01",
 #'		opts=c("nostatic","nocombined","nointeractive"))
-#'}
+#' }}
 #'
 	# verify options...
 	checkOpts <- function(opts,validOpts){

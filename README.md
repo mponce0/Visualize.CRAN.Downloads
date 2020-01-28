@@ -74,10 +74,9 @@ is also displayed as a filled dot and the actual value.
 <!-- ![Example of the static plot generated for the *ehelp* package](man/figures/DWNLDS_ehelp.png) -->
 
 <p float="left">
-  <img src="man/figures/DWNLDS_ehelp.png" width="49.50%" />
-  <img src="man/figures/DWNLDS_ggplot2.png" width="49.50%" />
+  <img src="./man/figures/DWNLDS_ehelp.png" width="49.50%" />
+  <img src="./man/figures/DWNLDS_ggplot2.png" width="49.50%" />
 </p>
-
 
 ### Comparison Plot
 A comparison plot between multiple package should be explicity requested using
@@ -103,8 +102,7 @@ of each the packages, ie. date-downloads-package.name.
 -->
 
 <p float="left">
-  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-scatterplot3d-rgl.png" width="49.50%" />
-<!--  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots.png" width="30%" /> -->
+  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.png" width="49.50%" />
   <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice.png" width="49.50%" />
 </p>
 

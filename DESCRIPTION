@@ -5,11 +5,10 @@ Version: 1.0
 Date: 2020-01-30
 Author: Marcelo Ponce [aut, cre]
 Maintainer: Marcelo Ponce <mponce@scinet.utoronto.ca>
-Description: This package allows you to visualize the trends and historical downloads from packages in the CRAN repository.
+Description: Visualize the trends and historical downloads from packages in the CRAN repository. Data is obtained by using the API to query the database from the RStudio CRAN mirror.
 Imports:
     graphics,
     stats,
-    utils,
     cranlogs,
     plotly,
     htmlwidgets

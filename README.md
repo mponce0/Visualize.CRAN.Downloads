@@ -24,8 +24,11 @@ the CRAN logs are not shown, in this way the package can generate a cleaner and
 more meaningful visualization.
 
 ### Displaying "moving" statistical estimators
-In order to show a closer trend to the time series data of downloads, the package will also display moving averages and moving intervals of confidence. The confidence interval will be shaded in the main plot.
+In order to show a closer trend to the time series data of downloads, the package will also display moving avera
+ges and moving intervals of confidence. The confidence interval will be shaded in the main plot.
+
 Both features can be turned off, using the corresponding flags in the options: `"noMovAvg"` and `"noConfBands"`.
+
 The moving estimators (average and confidence intervarls) are comoputed using a default of 10 windows to be considered over the indicated period of time, i.e. in a given period of time the algorithm will select 10 windows resulting in an effective size for the moving window of the time range divived by 10.
 The confidence interval is determined using the "moving" standard deviation, ie. the standard deviation computed on the moving window. The upper limit of the confidence band is determined by +half standard deviation and the lower band by -half standard deviation in the corresponding window.
 

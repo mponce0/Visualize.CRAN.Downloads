@@ -78,6 +78,8 @@ is also displayed as a filled dot and the actual value.
   <img src="man/figures/DWNLDS_ggplot2.png" width="49.50%" />
 </p>
 
+
+
 ### Comparison Plot
 A comparison plot between multiple package should be explicity requested using
 the `"compare"` option in the list of arguments.
@@ -102,7 +104,7 @@ of each the packages, ie. date-downloads-package.name.
 -->
 
 <p float="left">
-  <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.png" width="49.50%" />
+  <object data="https://github.com/mponce0/Visualize.CRAN.Downloads/blob/master/man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.pdf" type="application/pdf" width="700px" height="700px"><embed src="https://github.com/mponce0/Visualize.CRAN.Downloads/blob/master/man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.pdf"><img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.png" width="49.50%" /></embed></object>
   <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice.png" width="49.50%" />
 </p>
 
@@ -121,7 +123,7 @@ option             | action
 
 
 ### Interactive Plots
-<iframe id="igraph" scrolling="no" style="border:none" seamless="seamless" src="man/figures/Interactive_DWNLDS_ehelp.html" height="525" width="100%"></iframe>
+<iframe id="igraph" scrolling="no" style="border:none" seamless="seamless" src="man/figures/Interactive_DWNLDS_ehelp.html" height="525" width="100%></iframe>
 
 
 

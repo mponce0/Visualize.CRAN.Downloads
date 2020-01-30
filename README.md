@@ -119,10 +119,10 @@ option             | action
 ---------------------------
 
 
-<!--
+
 ### Interactive Plots
 <iframe id="igraph" scrolling="no" style="border:none" seamless="seamless" src="man/figures/Interactive_DWNLDS_ehelp.html" height="525" width="100%"></iframe>
--->
+
 
 
 ## Installation

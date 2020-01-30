@@ -104,7 +104,9 @@ of each the packages, ie. date-downloads-package.name.
 -->
 
 <p float="left">
-  <object data="https://github.com/mponce0/Visualize.CRAN.Downloads/blob/master/man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.pdf" type="application/pdf" width="700px" height="700px"><embed src="https://github.com/mponce0/Visualize.CRAN.Downloads/blob/master/man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.pdf"><img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.png" width="49.50%" /></embed></object>
+<!--  <object data="https://github.com/mponce0/Visualize.CRAN.Downloads/blob/master/man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.pdf" type="application/pdf" width="700px" height="700px"> -->
+  <embed src="https://github.com/mponce0/Visualize.CRAN.Downloads/blob/master/man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.pdf"><img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice-sp3d-rgl.png" width="49.50%" /></embed>
+  <!--</object> -->
   <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice.png" width="49.50%" />
 </p>
 

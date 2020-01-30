@@ -130,6 +130,8 @@ option             | action
 `"compare"`     | generates a plot comparing the downloads of multiple packages
 
 
+---
+
 
 ## Installation
 

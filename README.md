@@ -114,7 +114,7 @@ of each the packages, ie. date-downloads-package.name.
 
 
 ### Interactive Plots
-<iframe id="igraph" scrolling="no" style="border:none" seamless="seamless" src="man/figures/Interactive_DWNLDS_ehelp.html" height="525" width="100%"></iframe>
+<iframe id="igraph" scrolling="no" style="border:none" seamless="seamless" allowtransparency="true" style="background: #FFFFFF;"  src="man/figures/Interactive_DWNLDS_ehelp.html" height="525" width="100%"></iframe>
                                                                                                                                                
 
 

@@ -108,6 +108,14 @@ of each the packages, ie. date-downloads-package.name.
   <img src="man/figures/DWNLDS_ggplot2-plotly-gplots-lattice.png" width="49.50%" />
 </p>
 
+
+
+
+### Interactive Plots
+<iframe id="igraph" scrolling="no" style="border:none" seamless="seamless" src="man/figures/Interactive_DWNLDS_ehelp.html" height="525" width="100%></iframe>
+                                                                                                                                               
+
+
 ### Summary of options
 
 option             | action
@@ -120,10 +128,6 @@ option             | action
 `"compare"`     | generates a plot comparing the downloads of multiple packages
 ---------------------------
 
-
-
-### Interactive Plots
-<iframe id="igraph" scrolling="no" style="border:none" seamless="seamless" src="man/figures/Interactive_DWNLDS_ehelp.html" height="525" width="100%></iframe>
 
 
 

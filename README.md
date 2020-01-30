@@ -118,6 +118,10 @@ of each the packages, ie. date-downloads-package.name.
 
 
 ### Interactive Plots
+Interactive plots are generated using the `plotly` package and combine two plots in one single html file.
+A live example of this can be seen in https://mponce0.github.io/Visualize.CRAN.Downloads/
+The left plot will highlight the last month of data, and the plot on the right uses colour and symbols size to represent the respective downloads. The size of the symbols is rescaled with respect to the maximum number of downloads within the given time period, so it actuallty represents relative values.
+
 <aside style="background-color:#000000"> 
 <iframe id="igraph" scrolling="no" style="border:none" seamless="seamless" allowtransparency="true" style="background: #000000;"  src="man/figures/Interactive_DWNLDS_ehelp.html" height="525" width="100%"></iframe>
 </aside>                                                                                                                                               

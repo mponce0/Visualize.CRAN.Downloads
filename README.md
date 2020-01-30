@@ -25,7 +25,7 @@ more meaningful visualization.
 
 ### Displaying "moving" statistical estimators
 In other to show a closer trend to the time series data of downloads, the package will also displaying moving averages and moving intervals of confidence. The confidence interval is also shaded in the main plot.
-Both features can be turned off, using the corresponding flags in the optios: `"noMovingAvgs"` and `"noConfBands"`.
+Both features can be turned off, using the corresponding flags in the optios: `"noMovAvg"` and `"noConfBands"`.
 
 
 ## Implementation

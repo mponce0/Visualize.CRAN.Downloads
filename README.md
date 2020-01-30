@@ -128,8 +128,6 @@ option             | action
 `"noConfBand"`    | disables the shading of "confidence bands (regions)"
 `"noMovAvg"`   | disables the display of "moving" estimators
 `"compare"`     | generates a plot comparing the downloads of multiple packages
----------------------------
-
 
 
 

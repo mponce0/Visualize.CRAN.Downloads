@@ -161,11 +161,11 @@ To obtain the development version you can get it from the github repository, i.e
 # need devtools for installing from the github repo
 install.packages("devtools")
 
-# install eHelp
+# install Visualize.CRAN.Downloads
 devtools::install_github("mponce0/Visualize.CRAN.Downloads")
 
-# load eHelp
-library(eHelp)
+# load Visualize.CRAN.Downloads
+library(Visualize.CRAN.Downloads)
 ```
 
 
@@ -185,4 +185,17 @@ opts=c('nointeractive','compare','noConfBand'))
 
 pckg.data <- processPckg(c('plotly','gplots','lattice','scatterplot3d','rgl'), '2017-01-01',
 opts=c('nointeractive','compare','noMovAvg','noConfBand'))
+```
+
+
+
+## Applications
+One useful application this package offers is the chance to automatically generate figures reporting the statistics of your favorite package. For such, you can create a `cron` job using the following script.
+
+```
+# load library
+library(Visualize.CRAN.Downloads)
+
+# query fav. package
+processPckg("ehelp")
 ```

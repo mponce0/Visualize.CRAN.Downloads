@@ -199,3 +199,17 @@ library(Visualize.CRAN.Downloads)
 # query fav. package
 processPckg("ehelp")
 ```
+
+The your `cron` script would be something like,
+
+```
+0 5 * * * Rscript /home/username/scripts/queryScript.R
+```
+
+this would run the Rscript `queryScript.R` querying the 'ehelp' package every day at 5AM generating the static PDF and interactive HTML figures.
+
+For having this execute, you will only need to run the foollwing command in the terminal:
+
+```
+crontab /home/username/myCRONscript
+```

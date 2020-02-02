@@ -190,17 +190,18 @@ opts=c('nointeractive','compare','noMovAvg','noConfBand'))
 
 
 ## Applications
-One useful application this package offers is the chance to automatically generate figures reporting the statistics of your favorite package. For such, you can create a `cron` job using the following script.
+One useful application this package offers is the chance to automatically generate figures reporting the statistics of your favorite package. For such, you can create a `cron` job using the following Rscript.
 
 ```
 # load library
 library(Visualize.CRAN.Downloads)
 
 # query fav. package
+# this will generate the PDF static and HTML interactive plot, with the default one-year time window
 processPckg("ehelp")
 ```
 
-The your `cron` script would be something like,
+Then your `cron` script would be something like,
 
 ```
 0 5 * * * Rscript /home/username/scripts/queryScript.R
@@ -208,8 +209,30 @@ The your `cron` script would be something like,
 
 this would run the Rscript `queryScript.R` querying the 'ehelp' package every day at 5AM generating the static PDF and interactive HTML figures.
 
-For having this execute, you will only need to run the foollwing command in the terminal:
+For having this execute, you will only need to run the following command in the terminal:
 
 ```
 crontab /home/username/myCRONscript
+```
+
+
+Alternatively instead of calling the Rscript directly in your cron-job, you could execute a shell script that executes the Rscript first and then pushes the plots to your github repository. For instance,
+
+```
+# first call the Rscript to generate plots
+Rscript /home/username/scripts/queryScript.R
+
+# now add your files to your repo
+# this assumes that you have set up your repo using your keys as credentials
+git add /home/username/DWNLDS_favPckg.pdf
+git add /home/username/DWNLDS_favPckg.pdf
+
+# push the changes to the central github-repo
+# this will make them accesible through your repo, basically updating them every day at 5AM
+git push
+```
+
+The cron-job script would in this case look like:
+```
+0 5 * * * /home/username/scripts/updateFIGs.sh
 ```

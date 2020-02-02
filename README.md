@@ -193,6 +193,8 @@ opts=c('nointeractive','compare','noMovAvg','noConfBand'))
 One useful application this package offers is the chance to automatically generate figures reporting the statistics of your favorite package. For such, you can create a `cron` job using the following Rscript.
 
 ```
+## queryScript.R
+
 # load library
 library(Visualize.CRAN.Downloads)
 
@@ -204,6 +206,8 @@ processPckg("ehelp")
 Then your `cron` script would be something like,
 
 ```
+## myCRONscript
+
 0 5 * * * Rscript /home/username/scripts/queryScript.R
 ```
 
@@ -212,13 +216,15 @@ this would run the Rscript `queryScript.R` querying the 'ehelp' package every da
 For having this execute, you will only need to run the following command in the terminal:
 
 ```
-crontab /home/username/myCRONscript
+$ crontab /home/username/myCRONscript
 ```
 
 
 Alternatively instead of calling the Rscript directly in your cron-job, you could execute a shell script that executes the Rscript first and then pushes the plots to your github repository. For instance,
 
 ```
+## updateREPORTS.sh
+
 # first call the Rscript to generate plots
 Rscript /home/username/scripts/queryScript.R
 
@@ -234,5 +240,7 @@ git push
 
 The cron-job script would in this case look like:
 ```
-0 5 * * * /home/username/scripts/updateFIGs.sh
+## myCRONscript
+
+0 5 * * * /home/username/scripts/updateREPORTS.sh
 ```

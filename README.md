@@ -213,7 +213,7 @@ Then your `cron` script would be something like,
 
 this would run the Rscript `queryScript.R` querying the 'ehelp' package every day at 5AM generating the static PDF and interactive HTML figures.
 
-For having this execute, you will only need to run the following command in the terminal:
+For having this execute, you will only need to run the following command in the shell:
 
 ```
 $ crontab /home/username/myCRONscript

@@ -122,18 +122,17 @@ Interactive plots are generated using the `plotly` package and combine two plots
 A live example of this can be seen in https://mponce0.github.io/Visualize.CRAN.Downloads/
 The left plot will highlight the last month of data, and the plot on the right uses colour and symbols size to represent the respective downloads. The size of the symbols is rescaled with respect to the maximum number of downloads within the given time period, so it actuallty represents relative values.
 
+<!--
 <aside style="background-color:#000000"> 
 <iframe id="igraph" scrolling="no" style="border:none" seamless="seamless" allowtransparency="true" style="background: #000000;"  src="man/figures/Interactive_DWNLDS_ehelp.html" height="525" width="100%"></iframe>
 </aside>
-
-<object data="http://yoursite.com/the.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://yoursite.com/the.pdf"> <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://yoursite.com/the.pdf">Download PDF</a>.</p> </embed>
-</object>
+-->
 
 <object data="https://github.com/mponce0/Visualize.CRAN.Downloads/man/figures/Interactive_DWNLDS_ehelp.html" width="600" height="400">
     <embed src="man/figures/Interactive_DWNLDS_ehelp.html" width="600" height="400"> </embed>
     An interactive plot can be seen at <a href="https://mponce0.github.io/Visualize.CRAN.Downloads/">https://mponce0.github.io/Visualize.CRAN.Downloads/</a>
 </object>
+
 
 ### Summary of options
 

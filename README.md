@@ -129,13 +129,12 @@ The left plot will highlight the last month of data, and the plot on the right u
 </aside>
 -->
 
-<object data="https://github.com/mponce0/Visualize.CRAN.Downloads/man/figures/Interactive_DWNLDS_ehelp.html" width="100%" height="525">
-  <p>A live example of this can be seen in https://mponce0.github.io/Visualize.CRAN.Downloads/</p>
-<!--
+<object data="man/figures/Interactive_DWNLDS_ehelp.html" width="100%" height="525">
    <embed src="man/figures/Interactive_DWNLDS_ehelp.html" width="100%" height="525">
-       An interactive plot can be seen at <a href="https://mponce0.github.io/Visualize.CRAN.Downloads/">https://mponce0.github.io/Visualize.CRAN.Downloads/</a>
+       <p>A live example of this can be seen at
+            <a href="https://mponce0.github.io/Visualize.CRAN.Downloads/">https://mponce0.github.io/Visualize.CRAN.Downloads/</a>
+       </p>
    </embed>
--->
 </object>
 
 

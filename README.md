@@ -50,15 +50,16 @@ The following are the main functions that can be used in the "Visualize.CRAN.Dow
 
 
  Function  | Description
+--- | ---
  `processPckg`       | this is the main function that can be used specifying the package(s) name(s), as well as other options
- `interactivePlots`  | this function will generate the interactive plots for a given package's data
  `staticPlots`       | this function will generate the static plots for a given package's data
+ `interactivePlots`  | this function will generate the interactive plots for a given package's data
+---
 
-
-It is possible to specify several packages at the same time, and indicate
+With all these functions, it is possible to specify several packages at the same time, and indicate
 the type of outcome to be produced.
 
-By default the package will generate the static and interactive representations,
+The `processPckg` function will generate by default the static and interactive representations,
 this can be turned off by indicating the `"nostatic"` and/or `"nointeractive"` as
 options in the arguments of the main function.
 

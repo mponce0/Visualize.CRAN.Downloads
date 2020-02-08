@@ -11,6 +11,11 @@ comparing multiple packages.
 
 
 ## Features
+### Graphical and Statistical Outcomes
+* Static and interactive representations
+* Comparison plots for multiple packages
+* In screen output of statistics for different ranges of time
+
 ### Automatic date specification and selection
 The user can specify the range of dates to be processed, however the main
 function of the package will run a couple of checks and adjustments on these:
@@ -54,6 +59,7 @@ The following are the main functions that can be used in the "Visualize.CRAN.Dow
  `processPckg`       | this is the main function that can be used specifying the package(s) name(s), as well as other options
  `staticPlots`       | this function will generate the static plots for a given package's data
  `interactivePlots`  | this function will generate the interactive plots for a given package's data
+ `comparison.Plt`    | this function will generate a comparison plot among multiple packages
 ---
 
 With all these functions, it is possible to specify several packages at the same time, and indicate
@@ -97,7 +103,7 @@ is also displayed as a filled dot and the actual value.
 
 ### Comparison Plot
 A comparison plot between multiple package should be explicity requested using
-the `"compare"` option in the list of arguments.
+the `"compare"` option in the list of arguments of the `processPckg` function.
 
 For using this feature more than one package should be indicated!
 

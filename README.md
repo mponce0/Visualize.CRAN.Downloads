@@ -200,6 +200,7 @@ library(Visualize.CRAN.Downloads)
 
 ## Examples
 ```
+# Examples of the main function: processPckg()
 processPckg("ehelp")
 
 processPckg(c("ehelp","plotly","ggplot"), "2001-01-01")
@@ -213,6 +214,18 @@ opts=c('nointeractive','compare','noConfBand'))
 
 pckg.data <- processPckg(c('plotly','gplots','lattice','scatterplot3d','rgl'), '2017-01-01',
 opts=c('nointeractive','compare','noMovAvg','noConfBand'))
+
+
+# Examples of Static Plots: staticPlots()
+packageData <- retrievePckgData("ggplot")
+totalDownloads <- packageData[[1]]
+staticPlots(totalDownloads)
+staticPlots(totalDownloads,combinePlts=TRUE)
+
+# Examples of Interactive Plots: interactivePlots()
+packageXdownloads <- retrievePckgData("ggplot")[[1]]
+interactivePlots(packageXdownloads)
+
 ```
 
 

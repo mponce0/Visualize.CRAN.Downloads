@@ -46,6 +46,15 @@ name of the package analyzed.
 
 
 ## Usage
+The following are the main functions that can be used in the "Visualize.CRAN.Downloads" package:
+
+
+ Function  | Description
+ `processPckg`       | this is the main function that can be used specifying the package(s) name(s), as well as other options
+ `interactivePlots`  | this function will generate the interactive plots for a given package's data
+ `staticPlots`       | this function will generate the static plots for a given package's data
+
+
 It is possible to specify several packages at the same time, and indicate
 the type of outcome to be produced.
 

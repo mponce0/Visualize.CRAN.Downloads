@@ -155,7 +155,7 @@ The left plot will highlight the last month of data, and the plot on the right u
 
 
 
-### Summary of options
+### Summary of options for the `processPckg` function
 
 option             | action
 ------             | -----------
@@ -191,7 +191,11 @@ install.packages("devtools")
 
 # install Visualize.CRAN.Downloads
 devtools::install_github("mponce0/Visualize.CRAN.Downloads")
+```
 
+After having installed the "Visualize.CRAN.Downloads" package,
+you will need to load it into your R session or R script:
+```
 # load Visualize.CRAN.Downloads
 library(Visualize.CRAN.Downloads)
 ```

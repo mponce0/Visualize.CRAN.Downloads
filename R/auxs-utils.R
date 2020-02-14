@@ -18,7 +18,7 @@ today <- function() {
 #' @keywords internal
 	t1 <- Sys.Date()
 	# Will substract 1 to do not consider today, but yesterday
-	# this matches the dfeinition from cran_downloads too
+	# this matches the definition from cran_downloads too
 	t1 <- t1 - 1 
 	message("Ending date was not specifed, will assume today: ",t1)
 	return(t1)

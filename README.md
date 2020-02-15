@@ -155,7 +155,7 @@ The left plot will highlight the last month of data, and the plot on the right u
 
 
 
-### Summary of options for the `processPckg` function
+### Summary of options for the `opts` argument of the `processPckg` function
 
 option             | action
 ------             | -----------
@@ -166,8 +166,20 @@ option             | action
 `"noMovAvg"`   | disables the display of "moving" estimators
 `"compare"`     | generates a plot comparing the downloads of multiple packages
 
+---
+
+In addition the `processPckg` function also takes the following arguments:
+
+argument     |  description  
+---          |  ---
+`pckg.lst`   |  list of packages to process 
+`t0`         |  initial date, begining of the time period, given in "YYYY-MM-DD" format
+`t1`         |  final date, ending of the time period, given in "YYYY-MM-DD" format
+`opts`       |  a list of different options available for customizing the output  
+`device`     |  string to select the output format: 'PDF'/'PNG'/'JPEG' or 'screen' 
 
 ---
+
 
 
 ## Installation

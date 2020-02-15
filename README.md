@@ -236,6 +236,31 @@ interactivePlots(packageXdownloads)
 ```
 
 
+### Visualizing Downloads also from BioConductor
+Employing the basic plotting functions from this package,
+`staticPlots()`, `interactivePlots()` and `combine.Plt()`,
+it is also possible to generate plots for packages from BioConductor.
+The data must be downloaded separatedly, for isntance, using the 
+"bioC.logs" (https://github.com/mponce0/bioC.logs) package:
+
+```
+# install bioC.logs from CRAN
+install.packages("bioC.logs")
+
+# load bioC.logs
+library(bioC.logs)
+
+# retrieve stats for BioConductor packages using the bioC.logs package
+# Notice that the "CRAN" format is needed in the the bioC_downloads() fn
+# Also that we are slicing the first (and only element) of the returned list
+edgeR.logs <- bioC_downloads("edgeR", format="CRAN")[[1]]
+
+# generate plots for the BioConductor package stats
+staticPlots(edgeR.logs, combinePlts=TRUE, device="SCREEN")
+interactivePlots(edgeR.logs)
+```
+
+
 
 ## Applications
 One useful application this package offers is the chance to automatically generate figures reporting the statistics of your favorite package. For such, you can create a `cron` job using the following Rscript.

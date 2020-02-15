@@ -236,11 +236,11 @@ interactivePlots(packageXdownloads)
 ```
 
 
-### Visualizing Downloads also from BioConductor
-Employing the basic plotting functions from this package,
-`staticPlots()`, `interactivePlots()` and `combine.Plt()`,
+### Visualizing Downloads from BioConductor Packages
+Employing the basic plotting functions from the "Visualize.CRAN.Downloads" package,
+`staticPlots()`, `interactivePlots()` and `comparison.Plt()`,
 it is also possible to generate plots for packages from BioConductor.
-The data must be downloaded separatedly, for isntance, using the 
+The data must be downloaded separatedly, for instance, using the 
 "bioC.logs" (https://github.com/mponce0/bioC.logs) package:
 
 ```

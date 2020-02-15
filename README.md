@@ -273,7 +273,7 @@ library(Visualize.CRAN.Downloads)
 
 # query fav. package
 # this will generate the PDF static and HTML interactive plot, with the default one-year time window
-processPckg("ehelp")
+processPckg("ehelp", device="PDF")
 ```
 
 Then your `cron` script would be something like,

@@ -118,6 +118,7 @@ loadLibrary <- function(lib) {
 #' function to check and load an specific set of libraries
 #' @param  lib  is a list of packages to be loaded
 #' @keywords internal
+
 	if (require(lib,character.only = TRUE) == FALSE) stop(lib, " is needed for this package to work but is not installed in your system!")
 }
 

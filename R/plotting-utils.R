@@ -9,7 +9,83 @@
 #################################################################################################
 
 
-confBand <- function(x,y, x0,x1,y0,y1, windowsNbr=10, period=length(y)/windowsNbr, lcolour='gray',ltype=4,lwidth=2, filling=TRUE) {
+check.FileDir <- function(dirSave,fileName) {
+#' function to check the existance of the directory and combine directory and file names
+#'
+#' @param  dirSave  specify a valid directory where to save the file
+#' @param  fileName  name of the file
+#'
+#' @return  directory and filename combined, ie path to fileName
+#'
+#' @keywords internal
+
+        # Check dir existance
+        if (!dir.exists(dirSave)) {
+                stop(dirSave," is not a valid directory!")
+        } else {
+                FileName <- paste(paste(dirSave,"/",fileName, sep=""))
+        }
+
+	return(FileName)
+}
+
+
+outputType <- function(device, dirSave=getwd(),fileName, fileFmts, combinePlts, msg="plot") {
+#' function to validate the type of file format and open the corresponding file
+#'
+#' @param  device  string to select the output format: 'PDF'/'PNG'/'JPEG' or 'screen'
+#' @param  fileName  name of the file
+#' @param  dirSave  specify a valid directory where to save the file
+#' @param  fileFmts  list with the acceptable format types, eg. c("PDF","PNG","JPEG")
+#' @param  combinePlts  boolean flag indicating whether plots are combined or not
+#' @param  msg  optional string to customiza message to the user
+#'
+#' @importFrom grDevices dev.new jpeg png
+#'
+#' @keywords internal
+
+	# predefined quality for "raster" figures (PNG/JPEG)
+	raster.quality <- list(width = 7, height = 7, units = 'in', res = 300)
+
+	# Check dir existance
+	FileName <- check.FileDir(dirSave,fileName)
+
+	# informing where the plot is going to be saved
+	if (toupper(device) %in% fileFmts) message("Saving ",msg," in ", FileName)
+ 
+	# open PDF file
+	if (toupper(device)=="PDF") {
+		pdf(FileName)
+	} else if (toupper(device) %in% c("PNG","JPEG")) {
+		if (combinePlts) {
+			if (toupper(device)=="PNG") {
+				message("PNG file format indicated. \n We recommend using PDF for optimized quality instead.")
+				#png(fileName, raster.quality)
+				do.call(png, c(FileName,raster.quality))
+			} else {
+				do.call(jpeg, c(FileName,raster.quality))
+				message("JPEG file format indicated. \n We recommend using PDF for optimized quality instead.")
+			}
+		# if plots are not combined is NOT doable with PNG/JPEG
+		} else {
+			stop("PNG and JPEG formats do not support separated plots in one file! \n For plots in separated pages, please use instead 'PDF'")
+		}
+	} else if (toupper(device)=="SCREEN") {
+		message("Plots will be displayed in screen.")
+		dev.new()
+	} else {
+		warning("The argument 'device' has an unrecognized value ",device,'\n',
+			"Valid options are: ",paste(fileFmts,collapse=" ")," or 'SCREEN'.",'\n',
+			"Graphics will be displayed in screen...")
+		dev.new()
+	}
+}
+
+
+######################
+
+
+confBand <- function(x,y, x0,x1,y0,y1, windowsNbr=10, period=ceiling(length(y)/windowsNbr), lcolour='gray',ltype=4,lwidth=2, filling=TRUE) {
 # function to draw confidence bands, using generalized moving averages/sds
 # importFrom  grDevices  rgb
 # importFrom  graphics polygon
@@ -66,12 +142,16 @@ axes.TimePlt <- function(tot.days,pckg.stats.total,yaxis.side=4) {
 
 ### static plots
 staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
-		fileName=paste0("DWNLDS_",pckg.stats.total$package[1],".pdf"),
+		device="PDF",
+		fileName=paste0("DWNLDS_",pckg.stats.total$package[1],".",tolower(device)),
+		dirSave=getwd(),
 		combinePlts=FALSE, noMovAvg=FALSE, noConfBands=FALSE,
 		cutOff.pts=250, dbg=FALSE){
 #' function that generates visual trends of the package downloads logs from CRAN, it will generate 4 plots: two histograms, a pulse plot and the main plot is a plot of the downloads as a function of time
 #' @param  pckg.stats.total  total downloads from the package
+#' @param  device  string to select the output format: 'PDF'/'PNG'/'JPEG' or 'screen'
 #' @param  fileName  an optional string argument specifying the name of the file where to save the plots
+#' @param  dirSave  specify a valid directory where to save the plot
 #' @param  combinePlts a boolean indicating whether the plots generated will be combined into one single figure or not
 #' @param  noMovAvg  a boolean indicating whether moving statistical estimators, such as, the moving average will be displayed
 #' @param  noConfBands  a boolean indicating whether a confidence band will be displayed
@@ -86,12 +166,12 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' packageData <- retrievePckgData("ggplot")
+#' \donttest{
+#' packageData <- retrievePckgData("ggplot2")
 #' totalDownloads <- packageData[[1]]
 #' #lastmonthDownloads <- packageData[[2]]
-#' staticPlots(totalDownloads)
-#' staticPlots(totalDownloads,combinePlts=TRUE)
+#' staticPlots(totalDownloads, device="screen")
+#' staticPlots(totalDownloads,combinePlts=TRUE, device="screen")
 #' }
 #'
 
@@ -101,7 +181,7 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 	# @keywords internal
 
 		tot.lng <- length(x)
-		emph.range <- (tot.lng-(delta+0)):(tot.lng)
+		emph.range <- max(0,tot.lng-(delta+0)):(tot.lng)
 		x.range <- x[emph.range]
 		y.range <- y[emph.range]
 		if (subsample) {
@@ -135,6 +215,15 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 
 	######################
 
+	### preserve user graphical env.
+	# save the state of par() before running the code
+	oldpar <- par(no.readonly = TRUE)
+	# restore the previous state after the fn is done, even if it fails, so the user environment is not altered
+	on.exit(par(oldpar))
+	###
+
+	# supported file formats
+	fileFmts <- c("PDF","PNG","JPEG")
 
 	# define some useful quantities
 	max.downloads <- max(pckg.stats.total$count)
@@ -146,7 +235,8 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 
 	# will assume 30 days-long months
 	mnt.days <- 30	#length(pckg.stats.lstmnt$date)
-	lstmnt.range <- (tot.days-(mnt.days+0)):tot.days
+	if (dbg) print(max(tot.days-(mnt.days+0),1))
+	lstmnt.range <- max(tot.days-(mnt.days+0),1):tot.days
 	pckg.stats.lstmnt <- pckg.stats.total[lstmnt.range,]
 
 	# graphical params
@@ -158,15 +248,13 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 	# identify time intervals in range of dates
 	period.units <- tot.days/time.units
 	periods    <- period.units > 1
+	if (dbg) print(periods)
 
 	# reporting package name...
 	message("Processing package ",pckgName)
 
-	# informing where the plot is going to be saved
-	message("Saving static plots in ", paste0(getwd(),"/",fileName))
-
-	# open PDF file
-	pdf(fileName)
+	# check format of output selected and report where the plot is going to be saved/displayed
+	outputType(device, dirSave,fileName, fileFmts, combinePlts, msg="static plots")
 
 	if (combinePlts) {
 		#par(new=TRUE)
@@ -188,9 +276,13 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 	bins.units <- as.integer(period.units)
 
 	# select the bins according to the largest unit within the range
-	bins <- mean(bins.units[ceiling(max(which(periods))/1.)]+1, sqrt(tot.days), 15)
+	##if (tot.days >=  mnt.days) {
+		bins <- mean(bins.units[ceiling(max(which(periods))/1.)]+1, sqrt(tot.days), 15)
+	##} else {
 	#bins <- bins.mnt
 	#bins <- sqrt(tot.days)/2
+	##	bins <- ceiling(tot.days/2)
+	##}
 
 	if (dbg) {
 		print(tot.days)
@@ -262,11 +354,17 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 			ann=FALSE, axes=FALSE )
 	}
 
-	if (!noMovAvg)
+	if (!noMovAvg) {
+		if (tot.days < mnt.days) {
+			nbr.Ws <- min(2,tot.days)
+		} else {
+			nbr.Ws <- 10
+		}
 		confBand(pckg.stats.total$date, (pckg.stats.total$count),
 			fst.date,lst.date,0,max.downloads*1.05,
-			,,
+			,nbr.Ws,
 			'royalblue',,1, filling=!noConfBands)
+	}
 
 	# print some stats in the plot
 	text(pckg.stats.total$date[as.integer(tot.days*0.15)],.95*max(pckg.stats.total$count),
@@ -288,7 +386,7 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 
 
 	# most representative time range...
-	deltaT <- time.units[max(which(periods))-1]
+	deltaT <- max(1,time.units[max(which(periods))-1])
 #	if (tot.days <= cutOff.pts) {
 		emphasize(pckg.stats.total$date,pckg.stats.total$count, deltaT, fst.date,lst.date,0,max.downloads*1.05, "darkblue", .85)
 #	} else {
@@ -351,7 +449,9 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 
 
 	# Close file
-	dev.off()
+	if (toupper(device) %in% fileFmts) dev.off()
+
+	invisible()
 }
 
 
@@ -359,26 +459,30 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 ### interactive plots
 interactivePlots <- function(downloads.data, mytitle=paste(downloads.data$package[1],"Package downloads counts"),
 				nbrPlts = 2, month.ln=30,
-				HTMLfile=paste0("Interactive_DWNLDS_",downloads.data$package[1],".html") ) {
+				HTMLfile=paste0("Interactive_DWNLDS_",downloads.data$package[1],".html"),
+				device="HTML", dirSave=getwd() ) {
 #' function that generates interactive plots of the package downloads logs from CRAN
 #' @param  downloads.data  total downloads from the package
 #' @param  mytitle  optional char argument specifying the title to be displayed
 #' @param  nbrPlts  optional numeric argument specifying number of plots to generate
 #' @param  month.ln optional numeric argument specifying the lenght of the month in days
 #' @param  HTMLfile  an optional string argument specifying the name of the file where to save the plots
+#' @param  device  an optional string describing whether the interactive plot will be set to screen or to save in an HTLM file
+#' @param  dirSave  specify a valid directory where to save the plot
 #'
 #' @importFrom  plotly  %>% add_annotations add_trace as_widget plot_ly subplot layout
 #' @importFrom  htmlwidgets  saveWidget
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' packageXdownloads <- retrievePckgData("ggplot")[[1]]
 #' interactivePlots(packageXdownloads)
 #' }
 #'
        
         loadLibrary("plotly")
+
 
 	tot.days <- length(downloads.data[,1])
 
@@ -442,16 +546,24 @@ interactivePlots <- function(downloads.data, mytitle=paste(downloads.data$packag
 		p <- p1
 		}
 
-	# informing where the plot is going to be saved
-        message("Saving interactive plots in ", paste0(getwd(),"/",HTMLfile))
-	htmlwidgets::saveWidget(as_widget(p), HTMLfile)
+
+	if (tolower(device) != 'screen') {
+		# check dir existance
+		FileName <- check.FileDir(dirSave,HTMLfile)
+
+		# informing where the plot is going to be saved
+	        message("Saving interactive plots in ", FileName)
+		htmlwidgets::saveWidget(as_widget(p), FileName)
+	} else {
+		message("Option device='screen' detected -- Interactive Plots will be displayed in browser only during an interactive session.")
+	}
 
 	return(p)
 }
 
 
 ###### Comparison Plot
-comparison.Plt <- function(pckgDwnlds.lst, t0,t1, cmb=TRUE,noMAvgs=FALSE,noCBs=FALSE){
+comparison.Plt <- function(pckgDwnlds.lst, t0,t1, cmb=TRUE,noMAvgs=FALSE,noCBs=FALSE, device="PDF",dirSave=getwd()){
 #' function that generates a comparison plot among several packages
 #' @param  pckgDwnlds.lst  nested list containing the several packages to process
 #' @param  t0  initial date
@@ -459,10 +571,22 @@ comparison.Plt <- function(pckgDwnlds.lst, t0,t1, cmb=TRUE,noMAvgs=FALSE,noCBs=F
 #' @param  cmb  boolean flag, indicating whether the plots are shown in the same (default) graph or not
 #' @param  noMAvgs  boolean flag, indicating whether moving averages are displayed (default) or NOT --set to TRUE--
 #' @param  noCBs  boolean flag, indicating whether shaded confidence intervals are displayed (default) or NOT  --set to TRUE--
+#' @param  device  string to select the output format: 'PDF'/'PNG'/'JPEG' or 'screen'
+#' @param  dirSave  specify a valid directory where to save the file
 #'
 #' @importFrom graphics  legend
 #'
 #' @keywords internal
+
+	### preserve user graphical env.
+	# save the state of par() before running the code
+	oldpar <- par(no.readonly = TRUE)
+	# restore the previous state after the fn is done, even if it fails, so the user environment is not altered
+	on.exit(par(oldpar))
+	###
+
+	# supported file formats
+	fileFmts <- c("PDF","PNG","JPEG")
 
 	#print(str(pckgDwnlds.lst))
 	#lapply(pckgDwnlds.lst,summary)
@@ -475,6 +599,7 @@ comparison.Plt <- function(pckgDwnlds.lst, t0,t1, cmb=TRUE,noMAvgs=FALSE,noCBs=F
 	counts.max <- c()
 	pckgNames <- c()
 	tot.days <- 0
+
 
 	for (j in 1:nbrPckgs) {
 		#print(pckgDwnlds.lst[[j]]["date"][[(sapply(pckgDwnlds.lst[[j]]["date"],min))]])
@@ -516,9 +641,11 @@ comparison.Plt <- function(pckgDwnlds.lst, t0,t1, cmb=TRUE,noMAvgs=FALSE,noCBs=F
 	#print(xrange)
 	#print(yrange)
 
-	fileName <- paste0("DWNLDS_",paste(pckgNames,collapse='-'),".pdf")
-	message("Combined plots for packges: ",paste(pckgNames,collapse=' ')," will be saved in ",fileName)
-	pdf(fileName)
+	fileName <- paste0("DWNLDS_",paste(pckgNames,collapse='-'),".",tolower(device))
+	#message("Combined plots for packages: ",paste(pckgNames,collapse=' ')," will be saved in ",fileName)
+	outputType(device, dirSave,fileName, fileFmts, cmb, msg=paste0("Combined plots for packages: ",paste(pckgNames,collapse=' ')) )
+
+	# set margins values
 	par(mar=c(3,2.5,0.85,0.5))
 	#plot(pckgDwnlds.lst[[1]]$date, pckgDwnlds.lst[[1]]$count, 'n')
 	if (cmb)  plot(xrange,yrange, 'n', xlim=xrange, ylim=yrange, ann=FALSE, axes=FALSE)
@@ -558,7 +685,7 @@ comparison.Plt <- function(pckgDwnlds.lst, t0,t1, cmb=TRUE,noMAvgs=FALSE,noCBs=F
 	#box()
 
 	# close file...
-	dev.off()
+	if (toupper(device) %in% fileFmts) dev.off()
 } 
 
 #########################################################################################

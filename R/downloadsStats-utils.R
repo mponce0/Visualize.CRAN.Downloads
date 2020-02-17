@@ -5,10 +5,35 @@
 
 
 #################################################################################################
-##	Utilities file for the Visualize.CRAN.Downloads package
+##	Main file for the Visualize.CRAN.Downloads package
 #
 #################################################################################################
 
+
+### check number of records in packages
+checkEntries <- function(pckg.tgt, pckg=NULL, t0,t1) {
+
+	qualifier <- NULL
+
+	if (!is.null(pckg)) {
+		nbrEntries <- sum(pckg$count)
+	} else {
+		nbrEntries <- 0
+	}
+
+	if (nbrEntries == 0) {
+		qualifier <- "NO data"
+	} else if (nbrEntries < 5) {
+		qualifier <- paste("very few entries (",nbrEntries,")")
+	} else if (nbrEntries < 10) {
+		qualifier <- paste("few entries (",nbrEntries,")")
+	}
+
+	if (!is.null(qualifier)) {
+		msg <- paste("Package *",pckg.tgt,"* yields ",qualifier," in CRAN logs during the specified period of time (",t0,"...",t1,").")
+		warning(msg)
+	}
+}
 
 
 ### retrieve package data
@@ -24,11 +49,28 @@ retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 #'
 #' @examples
 #' \donttest{
-#' \dontrun{
-#' retrievePckgData("ggplot")
-#' retrievePckgData("ggplot","2018-01-01","2019-01-01")
+#' retrievePckgData("bioC.logs")
+#' retrievePckgData("bioC.logs","2018-01-01","2019-01-01")
 #' }
-#' }
+
+
+	## function for error handling
+	errorHandling.Msg <- function(condition,pkg) {
+		message("A problem was detected when trying to retrieve the data for the package: ",pkg)
+		if (grepl("curl",condition)) {
+			message("It is possible that your internet connection is down! Please check!")
+		} else {
+                        message("It is possible that you misspeled the name of this package! Please check!")
+		}
+		message(condition,'\n')
+
+		# update problems counter
+		#pkg.env$problems <- pkg.env$problems + 1
+	}
+
+	###############################
+
+
 
 	# to access the logs from CRAN
 	loadLibrary("cranlogs")
@@ -41,6 +83,9 @@ retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 	t0 <- dates[[1]]
 	t1 <- dates[[2]]
 
+	# Attempt to protect against bad internet conenction or misspelled package name
+	tryCatch(
+		{
 	# retrieve data
 	# TOTAL
 	pckg.stats.total <- cran_downloads(pckg, from=t0, to=t1)
@@ -49,10 +94,10 @@ retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 	#pckg.stats.lstmnt <- cran_downloads(pckg, when='last-month')
 
 	# check whether there is indeed available data, ie. an indirect indication of misspelling a package's name 
-	if (sum(pckg.stats.total$count) == 0) {
-		warning("Package *",pckg,"* yields no data in CRAN logs during the specified period of time (",t0,"...",t1,"); check that you have specified the correct name for the package.")
-		return(NULL)
-	}
+	nbrEntries <- sum(pckg.stats.total$count)
+	checkEntries(pckg, pckg.stats.total, t0,t1)
+	if (nbrEntries == 0) return(NULL)
+
 
 	# identify first not null entry in the set...
 	i0t <- which(pckg.stats.total$count>0, arr.ind=TRUE)[1]
@@ -64,27 +109,44 @@ retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 
 	#return(list(pckg.stats.total[i0t:length(pckg.stats.total$count),],pckg.stats.lstmnt[i0m:length(pckg.stats.lstmnt$count),]))
 	return(list(pckg.stats.total[i0t:length(pckg.stats.total$count),]))
+
+		},
+
+		# warning
+		warning = function(cond) {
+				errorHandling.Msg(cond,pckg)
+			},
+		# error
+		error = function(e){
+				errorHandling.Msg(e,pckg)
+			}
+	)
+
 }
 
 
 ### main wrapper fn
-processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
+processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list(), device="PDF",dirSave=getwd()) {
 #' main function to analyze a list of packages in a given time frame
 #' @param  pckg.lst  list of packages to process
 #' @param  t0  initial date, begining of the time period
 #' @param  t1  final date, ending of the time period
 #' @param  opts  a list of different options available for customizing the output 
+#' @param  device  string to select the output format: 'PDF'/'PNG'/'JPEG' or 'screen'
+#' @param  dirSave  specify a valid directory where to save the file
 #'
 #' @export
 #'
 #' @examples
-#' \donttest{\dontrun{
-#' processPckg("ehelp")
-#' processPckg(c("ehelp","plotly","ggplot"), "2001-01-01")
-#' processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts="nostatic")
-#' processPckg(c("ehelp","plotly","ggplot"), "2001-01-01",
-#'		opts=c("nostatic","nocombined","nointeractive"))
-#' }}
+#' \donttest{
+#' # device is set to "screen" so no files are generated and plots will appear on "screen"
+#' # alternative to 'device' are "PDF"/"PNG"/"JPEG"
+#' processPckg("ehelp", device="screen")
+#' processPckg(c("ehelp","plotly","ggplot2"), "2001-01-01", device="screen")
+#' processPckg(c("ehelp","plotly","ggplot2"), "2001-01-01", opts="nostatic", device="screen")
+#' processPckg(c("ehelp","plotly","ggplot2"), "2001-01-01",
+#'		opts=c("nostatic","nocombined","nointeractive"), device="screen")
+#' }
 #'
 	# verify options...
 	checkOpts <- function(opts,validOpts){
@@ -139,26 +201,26 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 			warning("Package *",pckg,"* yields no data in CRAN logs during the specified period of time (",t0,"...",t1,"); check that you have specified the correct name for the package.")
 		} else {
 			### Plots
+			# set defaults
+			cmb <- TRUE; noCBs <- FALSE; noMAvgs <- FALSE
+
 			## static plots
 			if ('nostatic' %in% tolower(opts)) {
 				message("Will skip static plots...")
 			} else {
-				# set defaults
-				cmb <- TRUE; noCBs <- FALSE; noMAvgs <- FALSE
-
-				# alternate depending on options provided by the user
+				# alternate default values, depending on options provided by the user
 				if ('nocombined' %in% tolower(opts))  cmb <- FALSE
 				if ('noconfband' %in% tolower(opts))  noCBs <- TRUE
 				if ('nomovavg' %in% tolower(opts))  noMAvgs <- TRUE
 
-				staticPlots(pckg.stats.total, combinePlts=cmb, noMovAvg=noMAvgs, noConfBands=noCBs)
+				staticPlots(pckg.stats.total, combinePlts=cmb, noMovAvg=noMAvgs, noConfBands=noCBs, device=device,dirSave=dirSave)
 			}
 
 			### interactive plots
 			if ( "nointeractive" %in% tolower(opts) ) {
 				message("will skip interactive plots...")
 			} else {
-				interactivePlots(pckg.stats.total)
+				interactivePlots(pckg.stats.total,dirSave=dirSave,device=device)
 			}
 
 			### comparison between several packages
@@ -175,7 +237,7 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list()) {
 	}
 
 	if ( "compare" %in% tolower(opts) ) {
-		comparison.Plt(pckgDwnlds.lst, t0,t1, cmb,noMAvgs,noCBs)
+		comparison.Plt(pckgDwnlds.lst, t0,t1, cmb,noMAvgs,noCBs,device=device,dirSave=dirSave)
 		return(invisible(pckgDwnlds.lst))
 	}
 }
@@ -192,7 +254,7 @@ summaries <- function(data1, deltaTs=30) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' packageXdownloads <- retrievePckgData("ehelp")[[1]]
 #' summaries(packageXdownloads)
 #' }

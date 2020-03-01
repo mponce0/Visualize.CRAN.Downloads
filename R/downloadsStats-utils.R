@@ -49,8 +49,8 @@ retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 #'
 #' @examples
 #' \donttest{
-#' retrievePckgData("bioC.logs")
-#' retrievePckgData("bioC.logs","2018-01-01","2019-01-01")
+#' retrievePckgData("ehelp")
+#' retrievePckgData("ehelp","2018-01-01","2020-01-01")
 #' }
 
 

@@ -28,9 +28,19 @@ lastyear.date <- function() {
 #' function that returns the date from one year ago
 #' @keywords internal
 	cur.date <- Sys.Date()-1
+
 	cur.year <- substr(cur.date,1,4)
+	cur.mnt <- substr(cur.date,6,7)
+	cur.day <- substr(cur.date,9,10)
+
+	# check whether this is a leap year...
+	if (cur.mnt=="02" & cur.day=="29") {
+		cur.day <- "28"
+		cur.mnt <- "02"
+	}
+
 	lst.year <- as.integer(cur.year) - 1
-	t0 <- paste(lst.year,substr(cur.date,5,10),sep="")
+	t0 <- paste(lst.year,cur.mnt,cur.day,sep="-")
 
 	message("Starting date was not specified, will assume a year from now: ",t0)
 	return(t0)

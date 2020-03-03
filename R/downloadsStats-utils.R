@@ -126,14 +126,14 @@ retrievePckgData <- function(pckg=NULL, t0=lastyear.date(), t1=today()){
 
 
 ### main wrapper fn
-processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list(), device="PDF",dirSave=getwd()) {
+processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list(), device="PDF",dirSave=NULL) {
 #' main function to analyze a list of packages in a given time frame
 #' @param  pckg.lst  list of packages to process
-#' @param  t0  initial date, begining of the time period
-#' @param  t1  final date, ending of the time period
+#' @param  t0  initial date, begining of the time period given in "YYYY-MM-DD" format
+#' @param  t1  final date, ending of the time period given in "YYYY-MM-DD" format
 #' @param  opts  a list of different options available for customizing the output 
 #' @param  device  string to select the output format: 'PDF'/'PNG'/'JPEG' or 'screen'
-#' @param  dirSave  specify a valid directory where to save the file
+#' @param  dirSave  name of a valid directory where to save the file, eg. do not specify this argument or enter "." for using the current working directory
 #'
 #' @export
 #'

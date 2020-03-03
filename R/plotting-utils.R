@@ -9,7 +9,7 @@
 #################################################################################################
 
 
-check.FileDir <- function(dirSave,fileName) {
+check.FileDir <- function(dirSave=NULL,fileName) {
 #' function to check the existance of the directory and combine directory and file names
 #'
 #' @param  dirSave  specify a valid directory where to save the file
@@ -19,18 +19,25 @@ check.FileDir <- function(dirSave,fileName) {
 #'
 #' @keywords internal
 
-        # Check dir existance
-        if (!dir.exists(dirSave)) {
-                stop(dirSave," is not a valid directory!")
-        } else {
-                FileName <- paste(paste(dirSave,"/",fileName, sep=""))
-        }
+	if (missing(fileName)) stop("Please indicate a filename!")
+
+	# check whether dirSave was specified...
+	if (!is.null(dirSave)) {
+		# Check dir existance
+		if (!dir.exists(dirSave)) {
+			stop(paste0("'",dirSave,"'")," is not a valid directory!")
+		} else {
+			FileName <- file.path(paste(paste(dirSave,"/",fileName, sep="")))
+		}
+	} else {
+		FileName <- file.path(fileName)
+	}
 
 	return(FileName)
 }
 
 
-outputType <- function(device, dirSave=getwd(),fileName, fileFmts, combinePlts, msg="plot") {
+outputType <- function(device, dirSave=NULL,fileName, fileFmts, combinePlts, msg="plot") {
 #' function to validate the type of file format and open the corresponding file
 #'
 #' @param  device  string to select the output format: 'PDF'/'PNG'/'JPEG' or 'screen'
@@ -144,7 +151,7 @@ axes.TimePlt <- function(tot.days,pckg.stats.total,yaxis.side=4) {
 staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 		device="PDF",
 		fileName=paste0("DWNLDS_",pckg.stats.total$package[1],".",tolower(device)),
-		dirSave=getwd(),
+		dirSave=NULL,
 		combinePlts=FALSE, noMovAvg=FALSE, noConfBands=FALSE,
 		cutOff.pts=250, dbg=FALSE){
 #' function that generates visual trends of the package downloads logs from CRAN, it will generate 4 plots: two histograms, a pulse plot and the main plot is a plot of the downloads as a function of time
@@ -460,7 +467,7 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 interactivePlots <- function(downloads.data, mytitle=paste(downloads.data$package[1],"Package downloads counts"),
 				nbrPlts = 2, month.ln=30,
 				HTMLfile=paste0("Interactive_DWNLDS_",downloads.data$package[1],".html"),
-				device="HTML", dirSave=getwd() ) {
+				device="HTML", dirSave=NULL ) {
 #' function that generates interactive plots of the package downloads logs from CRAN
 #' @param  downloads.data  total downloads from the package
 #' @param  mytitle  optional char argument specifying the title to be displayed
@@ -563,7 +570,7 @@ interactivePlots <- function(downloads.data, mytitle=paste(downloads.data$packag
 
 
 ###### Comparison Plot
-comparison.Plt <- function(pckgDwnlds.lst, t0,t1, cmb=TRUE,noMAvgs=FALSE,noCBs=FALSE, device="PDF",dirSave=getwd()){
+comparison.Plt <- function(pckgDwnlds.lst, t0,t1, cmb=TRUE,noMAvgs=FALSE,noCBs=FALSE, device="PDF",dirSave=NULL){
 #' function that generates a comparison plot among several packages
 #' @param  pckgDwnlds.lst  nested list containing the several packages to process
 #' @param  t0  initial date

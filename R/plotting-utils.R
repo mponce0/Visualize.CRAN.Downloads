@@ -393,12 +393,17 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 
 
 	# most representative time range...
-	deltaT <- max(1,time.units[max(which(periods))-1])
+	largest.timeUnit <- max(which(periods))
+	deltaT <- max(1,time.units[largest.timeUnit])
+	if (dbg) print(deltaT)
 #	if (tot.days <= cutOff.pts) {
 		emphasize(pckg.stats.total$date,pckg.stats.total$count, deltaT, fst.date,lst.date,0,max.downloads*1.05, "darkblue", .85)
 #	} else {
 #		emphasize(subsample.date,subsample.counts, deltaT, fst.date,lst.date,0,max.downloads*1.05, "darkblue", .85)
 #	}
+	if ( (largest.timeUnit > 1) & (time.units[largest.timeUnit-1] != 30) )
+		emphasize(pckg.stats.total$date,pckg.stats.total$count, time.units[largest.timeUnit-1], fst.date,lst.date,0,max.downloads*1.05, "darkred", 1.5)
+
 	# last month trend...
 	if (deltaT != 30) emphasize(pckg.stats.total$date,pckg.stats.total$count, 30, fst.date,lst.date,0,max.downloads*1.05, "darkred", 1.5)
 	#print(pckg.stats.lstmnt$date)

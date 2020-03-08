@@ -165,10 +165,10 @@ option             | action
 `"nostatic"`       | disables static plots
 `"nointeractive"`  | disables interactive plots
 `"nocombined"`     | disables combination of static plots, ie. each plot will be a separated figure
-`"noConfBand"`    | disables the shading of "confidence bands (regions)"
-`"noMovAvg"`   | disables the display of "moving" estimators
-`"compare"`     | generates a plot comparing the downloads of multiple packages
-
+`"noConfBand"`     | disables the shading of "confidence bands (regions)"
+`"noMovAvg"`       | disables the display of "moving" estimators
+`"compare"`        | generates a plot comparing the downloads of multiple packages
+`"noSummary"`      | disables the output of the stats-time summaries presented per package 
 ---
 
 In addition the `processPckg` function also takes the following arguments:

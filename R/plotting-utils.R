@@ -402,7 +402,7 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 #		emphasize(subsample.date,subsample.counts, deltaT, fst.date,lst.date,0,max.downloads*1.05, "darkblue", .85)
 #	}
 	if ( (largest.timeUnit > 1) & (time.units[largest.timeUnit-1] != 30) )
-		emphasize(pckg.stats.total$date,pckg.stats.total$count, time.units[largest.timeUnit-1], fst.date,lst.date,0,max.downloads*1.05, "darkred", 1.5)
+		emphasize(pckg.stats.total$date,pckg.stats.total$count, time.units[largest.timeUnit-1], fst.date,lst.date,0,max.downloads*1.05, "darkorange", 1)
 
 	# last month trend...
 	if (deltaT != 30) emphasize(pckg.stats.total$date,pckg.stats.total$count, 30, fst.date,lst.date,0,max.downloads*1.05, "darkred", 1.5)

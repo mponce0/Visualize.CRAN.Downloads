@@ -177,7 +177,7 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list(), d
 	t1 <- dates[[2]]
 
 	# check options...
-	validOpts <- tolower(c("nostatic","nointeractive", "nocombined", "noMovAvg","noConfBand", "compare"))
+	validOpts <- tolower(c("nostatic","nointeractive", "nocombined", "noMovAvg","noConfBand", "noSummary", "compare"))
 	checkOpts(opts,validOpts)
 
 
@@ -232,7 +232,7 @@ processPckg <- function(pckg.lst, t0=lastyear.date(), t1=today(), opts=list(), d
 
 			# summaries
 			#summaries(pckg.stats.total,pckg.stats.lstmnt)
-			summaries(pckg.stats.total)
+			if (!("nosummary" %in% tolower(opts)) )  summaries(pckg.stats.total)
 		}
 	}
 

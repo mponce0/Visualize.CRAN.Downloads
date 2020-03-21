@@ -349,3 +349,20 @@ The cron-job script would in this case look like:
 
 0 5 * * * /home/username/scripts/updateREPORTS.sh
 ```
+
+
+
+### Stats
+<!-- badges: start -->
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-last-release/Visualize.CRAN.Downloads)](https://cran.r-project.org/package=Visualize.CRAN.Downloads)
+[![CRAN checks](https://cranchecks.info/badges/worst/Visualize.CRAN.Downloads)](https://cranchecks.info/pkgs/Visualize.CRAN.Downloads)
+[![Downloads last.mnth](https://cranlogs.r-pkg.org/badges/Visualize.CRAN.Downloads)](https://cran.r-project.org/package=Visualize.CRAN.Downloads)
+[![Downloads last.day](https://cranlogs.r-pkg.org/badges/last-week/Visualize.CRAN.Downloads)](https://cran.r-project.org/package=Visualize.CRAN.Downloads)
+[![Downloads last.day](https://cranlogs.r-pkg.org/badges/last-day/Visualize.CRAN.Downloads)](https://cran.r-project.org/package=Visualize.CRAN.Downloads)
+<!-- badges: end -->
+<p align="center">
+	<img src="https://github.com/mponce0/R.pckgs.stats/blob/master/DWNLDS_Visualize.CRAN.Downloads.png" width="65%" alt="Live download stats" />
+	<figcaption>"Live" download stats, figure generated using "Visualize.CRAN.Downloads"</figcaption>
+</p>
+
+<object data="https://github.com/mponce0/R.pckgs.stats/blob/master/DWNLDS_Visualize.CRAN.Downloads.pdf" type="application/pdf" width="700px" height="700px">

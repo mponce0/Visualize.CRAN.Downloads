@@ -362,7 +362,7 @@ The cron-job script would in this case look like:
 <!-- badges: end -->
 <p align="center">
 	<img src="https://github.com/mponce0/R.pckgs.stats/blob/master/DWNLDS_Visualize.CRAN.Downloads.png" width="65%" alt="Live download stats" />
-	<figcaption>"Live" download stats, figure generated using "Visualize.CRAN.Downloads"</figcaption>
+	<figcaption>"Live" download stats, figure generated using the <a href="https://cran.r-project.org/package=Visualize.CRAN.Downloads" target="_blank">"Visualize.CRAN.Downloads"</a> package</figcaption>
 </p>
 
 <object data="https://github.com/mponce0/R.pckgs.stats/blob/master/DWNLDS_Visualize.CRAN.Downloads.pdf" type="application/pdf" width="700px" height="700px">

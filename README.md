@@ -351,6 +351,28 @@ The cron-job script would in this case look like:
 ```
 
 
+## How to Cite this Package
+```R
+> citation("Visualize.CRAN.Downloads")
+
+To cite package ‘Visualize.CRAN.Downloads’ in publications use:
+
+  Marcelo Ponce (2020). Visualize.CRAN.Downloads: Visualize Downloads
+  from 'CRAN' Packages. R package version 1.0.
+  https://CRAN.R-project.org/package=Visualize.CRAN.Downloads
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {Visualize.CRAN.Downloads: Visualize Downloads from 'CRAN' Packages},
+    author = {Marcelo Ponce},
+    year = {2020},
+    note = {R package version 1.0},
+    url = {https://CRAN.R-project.org/package=Visualize.CRAN.Downloads},
+  }
+```
+
+
 
 ### Stats
 <!-- badges: start -->

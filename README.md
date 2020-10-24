@@ -226,20 +226,23 @@ library(Visualize.CRAN.Downloads)
 ### Examples of the main function, using `processPckg()`
 ```
 # generates static and interactive plots for the "ehelp" package with default arguments
+# default value for the static plot is PDF
 processPckg("ehelp")
 
-# specifying starting date in 2001-01-01
-processPckg(c("ehelp","plotly","ggplot"), "2001-01-01")
+# specifying starting date in 2001-01-01, and send to the screen
+processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", device="SCREEN")
 
 # request no static plot, ie. only interactive plot will be generated
 processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts="nostatic")
 
 # process 3 packages, with only static plot, ie. no interactive nor comparison plot
+# static plots will be genereated as PDF
 processPckg(c("ehelp","plotly","ggplot"), "2001-01-01", opts=c("nointeractive","nocombined"))
 
 # process 4 packages, with a given starting date and static and comparison plots
+# output set to screen
 pckg.data <- processPckg(c('ggplot2','plotly','gplots','lattice'), '2017-01-01',
-opts=c('nointeractive','compare','noConfBand'))
+opts=c('nointeractive','compare','noConfBand'), device='SCREEN')
 
 # no interactive plot, only static plots for each package and comparison plot among all of them to be displayed in 'screen' only
 pckg.data <- processPckg(c('plotly','gplots','lattice','scatterplot3d','rgl'), '2017-01-01',
@@ -253,9 +256,10 @@ packageData <- retrievePckgData("ggplot")
 # select 1st element of the list
 totalDownloads <- packageData[[1]]
 
-# call the plotting fn
+# call the plotting fn, with default value of device --> PDF
 staticPlots(totalDownloads)
-staticPlots(totalDownloads,combinePlts=TRUE)
+# set output to the screen
+staticPlots(totalDownloads,combinePlts=TRUE, device='SCREEN')
 ```
 
 ### Examples of Interactive Plots, using `interactivePlots()`

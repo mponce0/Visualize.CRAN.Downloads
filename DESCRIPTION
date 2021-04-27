@@ -16,7 +16,8 @@ Suggests:
     knitr,
     devtools,
     roxygen2,
-    testthat
+    testthat,
+    rmarkdown
 License: GPL (>=2)
 URL: https://github.com/mponce0/Visualize.CRAN.Downloads
 BugReports: https://github.com/mponce0/Visualize.CRAN.Downloads/issues

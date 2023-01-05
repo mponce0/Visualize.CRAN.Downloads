@@ -1,10 +1,10 @@
 Package: Visualize.CRAN.Downloads
 Type: Package
 Title: Visualize Downloads from 'CRAN' Packages
-Version: 1.0
-Date: 2020-03-19
+Version: 1.0.2
+Date: 2022-01-05
 Author: Marcelo Ponce [aut, cre]
-Maintainer: Marcelo Ponce <mponce@scinet.utoronto.ca>
+Maintainer: Marcelo Ponce <m.ponce@utoronto.ca>
 Description: Visualize the trends and historical downloads from packages in the 'CRAN' repository. Data is obtained by using the 'API' to query the database from the 'RStudio' 'CRAN' mirror.
 Imports:
     graphics,
@@ -21,5 +21,5 @@ Suggests:
 License: GPL (>=2)
 URL: https://github.com/mponce0/Visualize.CRAN.Downloads
 BugReports: https://github.com/mponce0/Visualize.CRAN.Downloads/issues
-RoxygenNote: 6.1.99.9001
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr

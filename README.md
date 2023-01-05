@@ -2,8 +2,12 @@
 
 <!-- badges: start -->
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-last-release/Visualize.CRAN.Downloads)](https://cran.r-project.org/package=Visualize.CRAN.Downloads)
-[![CRAN checks](https://cranchecks.info/badges/worst/Visualize.CRAN.Downloads)](https://cranchecks.info/pkgs/Visualize.CRAN.Downloads)
+[![cran checks](https://badges.cranchecks.info/worst/Visualize.CRAN.Downloads.svg)](https://cran.r-project.org/web/checks/check_results_Visualize.CRAN.Downloads.html)
+[![cran checks](https://badges.cranchecks.info/summary/Visualize.CRAN.Downloads.svg)](https://cran.r-project.org/web/checks/check_results_Visualize.CRAN.Downloads.html)
 [![Downloads](https://cranlogs.r-pkg.org/badges/Visualize.CRAN.Downloads)](https://cran.r-project.org/package=Visualize.CRAN.Downloads)
+<!--
+[![CRAN checks](https://cranchecks.info/badges/worst/Visualize.CRAN.Downloads)](https://cranchecks.info/pkgs/Visualize.CRAN.Downloads)
+-->
 <!-- badges: end -->
 
 ## Introduction
@@ -153,6 +157,7 @@ The left plot will highlight the last month of data, and the plot on the right u
 <!--<object data="https://github.com/mponce0/Visualize.CRAN.Downloads/blob/master/man/figures/Interactive_DWNLDS_ehelp.html" width="100%" height="525">
    <embed src="https://github.com/mponce0/Visualize.CRAN.Downloads/blob/master/man/figures/Interactive_DWNLDS_ehelp.html" width="100%" height="525">
 -->
+
 <object data="man/figures/Interactive_DWNLDS_ehelp.html" width="100%" height="525">
    <embed src="man/figures/Interactive_DWNLDS_ehelp.html" width="100%" height="525">
        <p>A live example of this can be seen at
@@ -381,7 +386,8 @@ A BibTeX entry for LaTeX users is
 ### Stats
 <!-- badges: start -->
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-last-release/Visualize.CRAN.Downloads)](https://cran.r-project.org/package=Visualize.CRAN.Downloads)
-[![CRAN checks](https://cranchecks.info/badges/worst/Visualize.CRAN.Downloads)](https://cranchecks.info/pkgs/Visualize.CRAN.Downloads)
+[![cran checks](https://badges.cranchecks.info/worst/Visualize.CRAN.Downloads.svg)](https://cran.r-project.org/web/checks/check_results_Visualize.CRAN.Downloads.html)
+[![cran checks](https://badges.cranchecks.info/summary/Visualize.CRAN.Downloads.svg)](https://cran.r-project.org/web/checks/check_results_Visualize.CRAN.Downloads.html)
 [![Downloads last.mnth](https://cranlogs.r-pkg.org/badges/Visualize.CRAN.Downloads)](https://cran.r-project.org/package=Visualize.CRAN.Downloads)
 [![Downloads last.day](https://cranlogs.r-pkg.org/badges/last-week/Visualize.CRAN.Downloads)](https://cran.r-project.org/package=Visualize.CRAN.Downloads)
 [![Downloads last.day](https://cranlogs.r-pkg.org/badges/last-day/Visualize.CRAN.Downloads)](https://cran.r-project.org/package=Visualize.CRAN.Downloads)
@@ -392,3 +398,4 @@ A BibTeX entry for LaTeX users is
 </p>
 
 <object data="https://github.com/mponce0/R.pckgs.stats/blob/master/DWNLDS_Visualize.CRAN.Downloads.pdf" type="application/pdf" width="700px" height="700px">
+

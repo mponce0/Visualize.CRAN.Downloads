@@ -456,9 +456,11 @@ staticPlots <- function(pckg.stats.total, #pckg.stats.lstmnt,
 	text(pckg.stats.total$date[as.integer(tot.days*0.05)],1.1*mean.total, paste("avg = ",as.integer(mean.total)) )
 
 	# add maximum download
-	points(max.dwlds.date,max.downloads, col='darkred', pch=19)
-	text(max.dwlds.date,max.downloads*1.035,max.downloads, col='darkred')
-
+	# loop over possible dates showing same maximum number of downloads
+	for (i in 1:length(max.dwlds.date)) {
+		points(max.dwlds.date[i],max.downloads, col='darkred', pch=19)
+		text(max.dwlds.date[i],max.downloads*1.035,max.downloads, col='darkred')
+	}
 
 	# Close file
 	if (toupper(device) %in% fileFmts) dev.off()
@@ -487,7 +489,7 @@ interactivePlots <- function(downloads.data, mytitle=paste(downloads.data$packag
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' packageXdownloads <- retrievePckgData("ggplot")[[1]]
 #' interactivePlots(packageXdownloads)
 #' }

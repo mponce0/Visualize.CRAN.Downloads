@@ -1,5 +1,8 @@
-January 2022: ver 1.0.2
-	- updating reference to new CRAN badges -- minor release (Jan. 2022)
+March 2023: ver 1.0.3
+	- static plot generation can now handle packages having same maximum number of downloads in different dates (Mar. 2023)
+
+January 2023: ver 1.0.2
+	- updating reference to new CRAN badges -- minor release (Jan. 2023)
 
 April 2021: ver 1.0.1
 	- added rmarkdown to list of "suggests" due to knitr changes (Apr. 2021)

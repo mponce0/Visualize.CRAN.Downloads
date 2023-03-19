@@ -1,8 +1,8 @@
 Package: Visualize.CRAN.Downloads
 Type: Package
 Title: Visualize Downloads from 'CRAN' Packages
-Version: 1.0.2
-Date: 2022-01-05
+Version: 1.0.3
+Date: 2023-03-19
 Author: Marcelo Ponce [aut, cre]
 Maintainer: Marcelo Ponce <m.ponce@utoronto.ca>
 Description: Visualize the trends and historical downloads from packages in the 'CRAN' repository. Data is obtained by using the 'API' to query the database from the 'RStudio' 'CRAN' mirror.
